@@ -1,0 +1,13 @@
+<nav class="nav-container">
+  <img src="assets/logo-large.svg" />
+  <!-- <button class="add-goal-btn">
+    <img src="assets/icon-plus.svg" />
+    <label class="add-goal-label">New Goal</label>
+  </button> -->
+    
+  <app-button class="height:24px" (click)="handleOpenModal()">
+    <img src="assets/icon-plus.svg" />
+    New Goal</app-button>
+    
+</nav>
+<app-modal [isOpen]="openModal" (close)="handleOpenModal()"></app-modal>

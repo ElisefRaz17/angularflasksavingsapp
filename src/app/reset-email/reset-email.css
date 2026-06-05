@@ -1,0 +1,94 @@
+
+
+.reset-email-btn{
+    background-color: white;
+    color: black;
+}
+.already-text{
+    color: var(--color-neutral-300);
+    font-family: "Inter",sans-serif;
+    cursor: pointer;
+    font-size: 16px;
+}
+.forgot-link{
+    color: var(--color-neutral-300);
+    text-align: right;
+    font-family: "Inter",sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    align-self: stretch;
+}
+.reset-email-title{
+    color: var(--color-neutral-0);
+    font-family: "Inter",sans-serif;
+    font-weight: 700;
+    font-size: 32px;;
+}
+.reset-email-title-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.reset-email-subheader{
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--color-neutral-300);
+    font-family: "Inter",sans-serif;
+
+}
+  .quote-section{
+    display: none;
+  }
+
+.reset-email-header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+}
+.reset-email-container{
+    display:grid;
+    grid-template-columns: repeat(1fr);
+    padding:var(--spacing-500, 40px) var(--spacing-1000, 80px) var(--spacing-500, 40px) var(--spacing-500, 40px);
+}
+.reset-sub-links-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 1rem;
+    align-self: stretch;
+}
+.reset-sign-link{
+    color: var(--color-neutral-300);
+    font-family: "Inter",sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    align-self:stretch;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+@media (min-width: 1024px) {
+  .reset-email-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .quote-section {
+    display: block;
+  }
+}
+
+.reset-email-credentials{
+    border-radius: 16px;
+    gap: 32px;
+    max-width: 640px;
+    max-height: 616px;
+}
+.reset-email-input-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+}

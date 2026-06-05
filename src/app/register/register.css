@@ -1,0 +1,83 @@
+
+.register-btn{
+    background-color: white;
+    color: black;
+}
+.already-text{
+    color: var(--color-neutral-300);
+    font-family: "Inter",sans-serif;
+    cursor: pointer;
+    font-size: 16px;
+}
+.sign-link{
+    text-decoration: underline;
+    color: var(--color-neutral-0);
+    font-family: "Inter",sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+}
+.register-title{
+    color: var(--color-neutral-0);
+    font-family: "Inter",sans-serif;
+    font-weight: 700;
+    font-size: 32px;;
+}
+.register-title-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.register-subheader{
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--color-neutral-300);
+    font-family: "Inter",sans-serif;
+
+}
+  .quote-section{
+    display: none;
+  }
+
+.register-header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+}
+.register-container{
+    display:grid;
+    grid-template-columns: repeat(1fr);
+    padding:var(--spacing-500, 40px) var(--spacing-1000, 80px) var(--spacing-500, 40px) var(--spacing-500, 40px);
+}
+.sub-links-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    align-self: center;
+}
+@media (min-width: 1024px) {
+  .register-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .quote-section {
+    display: block;
+  }
+}
+
+.register-credentials{
+    border-radius: 16px;
+    gap: 32px;
+    max-width: 640px;
+    max-height: 616px;
+}
+.register-input-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+}

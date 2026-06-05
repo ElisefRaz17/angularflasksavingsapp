@@ -1,0 +1,39 @@
+@import "tailwindcss";
+@import "@fortawesome/fontawesome-free/css/all.css";
+/* Add application styles & imports to this file! */
+@theme{
+  --color-neutral-0:#FFFFFF;
+  --color-neutral-300:#B7B7B7;
+  --color-neutral-400:#898A8B;
+  --color-neutral-500:#676767;
+  --color-neutral-600:#3C3B40;
+  --color-neutral-700:#313131;
+  --color-neutral-800:#1F1F1F;
+  --color-neutral-900:#101010;
+  --color-orange-400:#FF5722;
+  --color-red-500:#EF4444;
+  --color-green-500:#4ADE80;
+}
+:root {
+  --default: #444444;
+  --color-neutral-0:#FFFFFF;
+  --color-neutral-300:#B7B7B7;
+  --color-neutral-400:#898A8B;
+  --color-neutral-500:#676767;
+  --color-neutral-600:#3C3B40;
+  --color-neutral-700:#313131;
+  --color-neutral-800:#1F1F1F;
+  --color-neutral-900:#101010;
+  --color-orange-400:#FF5722;
+  --color-red-500:#EF4444;
+  --color-green-500:#4ADE80;
+  background-color: #101010;
+}
+@font-face {
+  font-family: "Inter";
+  src: url('assets/fonts/Inter/Inter-VariableFont_opsz\,wght.ttf') format("truetype");
+}
+@font-face{
+  font-family:"Bricolage";
+  src: url('assets/fonts/Bricolage_Grotesque/BricolageGrotesque-VariableFont_opsz\,wdth\,wght.ttf') format("truetype");
+}

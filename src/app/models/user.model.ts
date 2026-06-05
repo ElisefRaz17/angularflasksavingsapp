@@ -1,0 +1,10 @@
+export interface User{
+    id?:number;
+    email:string;
+    full_name:string;
+    password:string;
+}
+export interface AuthUser{
+    email:string;
+    password:string;
+}

@@ -1,0 +1,99 @@
+:host{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
+    border-radius: var(--corner-radius-16, 16px);
+    border: 1px solid var(--colors-neutral-600, #3C3B40);
+    background: var(--colors-neutral-800, #1F1F1F);
+}
+.card-header{
+    display:flex;
+    justify-content:center;
+    align-items: center;
+    gap:10px;
+    align-self:stretch;
+    font-family: "Inter";
+}
+.goalName{
+    color:var(--color-neutral-0);
+    font-size: 20px;
+    font-weight: 600;
+}
+.card-footer{
+    display:flex;
+    align-items: center;
+    gap:8px;
+    align-self:stretch;
+}
+
+.tag{
+    border-radius:44px;
+    display: flex;
+    padding:4px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.percentage{
+    font-family: "Bricolage",sans-serif;
+    font-size: 64px;
+    font-weight: 600;
+}
+.progress-bar-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex:1 0 0;
+    border-radius: 40px;
+}
+:host(.card-size-default){
+    width: 408px;
+    height: 240px;
+}
+:host(.card-size-wide):host(.card-variant-in-progress){
+    width: 838px;
+    height: 240px;
+    border-radius: var(--corner-radius-16, 16px);
+    border: 1px solid var(--colors-white-alpha-30, rgba(255, 255, 255, 0.30));
+    background: linear-gradient(272deg, var(--colors-orange-400, #FF5722) 1.5%, var(--colors-orange-700, #B92B09) 98.5%);
+}
+:host(.card-size-tall){
+    width: 408px;
+    height:504px;
+}
+:host(.card-variant-no-progress) .percentage{
+    color:var(--color-neutral-400);
+}
+:host(.card-variant-in-progress) .percentage{
+    color:var(--color-orange-400);
+}
+:host(.card-variant-complete) .percentage{
+    color:var(--color-green-500);
+}
+.progress-bar-track {
+  flex-grow: 1;
+  height: 12px;
+  background-color: var(--color-neutral-700);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.progress-bar-fill{
+    border-radius:8px;
+    height:100%;
+    transition: width 0.3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background:var(--color-orange-400);
+}
+:host(.card-variant-no-progress) .progress-bar-fill{
+    background:var(--color-neutral-700);
+}
+:host(.card-variant-in-progress) .progress-bar-fill{
+    background:var(--color-orange-400);
+}
+:host(.card-variant-complete) .progress-bar-fill{
+    background:var(--color-neutral-700);
+}

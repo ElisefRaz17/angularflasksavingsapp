@@ -1,0 +1,91 @@
+
+.login-btn{
+    background-color: white;
+    color: black;
+}
+.already-text{
+    color: var(--color-neutral-300);
+    font-family: "Inter",sans-serif;
+    cursor: pointer;
+    font-size: 16px;
+}
+.forgot-link{
+    color: var(--color-neutral-300);
+    text-align: right;
+    font-family: "Inter",sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    align-self: stretch;
+}
+.login-title{
+    color: var(--color-neutral-0);
+    font-family: "Inter",sans-serif;
+    font-weight: 700;
+    font-size: 32px;;
+}
+.login-title-container{
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.login-subheader{
+    font-weight: 500;
+    font-size: 16px;
+    color: var(--color-neutral-300);
+    font-family: "Inter",sans-serif;
+
+}
+  .quote-section{
+    display: none;
+  }
+
+.login-header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 32px;
+}
+.login-container{
+    display:grid;
+    grid-template-columns: repeat(1fr);
+    padding:var(--spacing-500, 40px) var(--spacing-1000, 80px) var(--spacing-500, 40px) var(--spacing-500, 40px);
+}
+.sub-links-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+    align-items: center;
+    align-self: center;
+}
+.sign-link{
+    text-decoration: underline;
+    color: var(--color-neutral-0);
+    font-family: "Inter",sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+}
+@media (min-width: 1024px) {
+  .login-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .quote-section {
+    display: block;
+  }
+}
+
+.login-credentials{
+    border-radius: 16px;
+    gap: 32px;
+    max-width: 640px;
+    max-height: 616px;
+}
+.login-input-container{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    align-self: stretch;
+}

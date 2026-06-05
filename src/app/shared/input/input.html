@@ -1,0 +1,18 @@
+<div class="input-wrap-container">
+  <label class="input-label">{{label}}</label>
+  <div class="input-container">
+    <span *ngIf="icon" class="icon">
+      <fa-icon [icon]="icon"(click)="onIconClick()"></fa-icon>
+    </span>
+    <input
+      #inputEl
+      [type]="type"
+      [disabled]="disabled"
+      [(ngModel)]="value"
+      (ngModelChange)="onTouched()"
+      [placeholder]="placeholder"
+      (input)="onChange($event)"
+      class="custom-input"
+    />
+  </div>
+</div>

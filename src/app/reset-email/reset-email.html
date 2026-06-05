@@ -1,0 +1,24 @@
+<div class="reset-email-container">
+  <img src="../../assets/forgot-password-quote.png" class="quote-section" />
+
+  <div class="reset-email-header">
+    <img src="../../assets/logo-large.svg" />
+    <div class="reset-email-title-container">
+      <span class="reset-email-title">Check your inbox</span>
+      <span class="reset-email-subheader"
+        >We've sent a reset link to {{email()}}</span
+      >
+    </div>
+    <div class="reset-email-input-container">
+      <span>The link expires in 30 minutes.</span>
+
+      <app-button (click)="openEmailApp()" variant="secondary">Open email app</app-button>
+
+          <div class="reset-sub-links-container">
+        <label class="already-text">Didn't receive it?</label
+        ><a routerLink="" class="sign-link">Resend email</a>
+      </div>
+      <a (click)="resendResetLink()" class="reset-sign-link"><img src="../../assets/Back Icon.png"/>Back to sign in</a>
+    </div>
+  </div>
+</div>

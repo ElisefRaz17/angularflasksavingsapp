@@ -1,0 +1,38 @@
+<div class="rounded-xl border shadow-sm transition-all duration-200" [ngClass]="[sizeClasses().card, stateClasses().bg]">
+  <!-- Header Text -->
+  <div class="flex justify-between items-start mb-3">
+    <h3 class="font-semibold text-neutral-0" [ngClass]="sizeClasses().title">
+      {{ title }}
+    </h3>
+    <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 capitalize">
+      {{ state }}
+    </span>
+  </div>
+
+  <!-- Progress Percentage Subtext -->
+  <div class="flex justify-start mt-1.5">
+    <span class="text-[64px] font-semibold" [ngClass]="stateClasses().text">
+      {{ progressPercentage() | number:'1.0-0' }}%
+    </span>
+  </div>
+
+  <!-- Progress Bar Container -->
+  <div class="w-full bg-neutral-700 rounded-full overflow-hidden" [ngClass]="sizeClasses().progressTrack">
+    <!-- Active Progress Bar Fill -->
+    <div 
+      class="h-full rounded-full transition-all duration-500 ease-out"
+      [ngClass]="stateClasses().bar"
+      [style.width.%]="progressPercentage()">
+    </div>
+  </div>
+
+    <!-- Money Values -->
+  <div class="flex items-baseline gap-1 mb-4 mt-4">
+    <span class="text-sm text-neutral-0" [ngClass]="sizeClasses().amount">
+      {{ currentAmount | currency:'USD':'symbol':'1.0-0' }}
+    </span>
+    <span class="text-sm text-neutral-0">
+      of {{ goalAmount | currency:'USD':'symbol':'1.0-0' }}
+    </span>
+  </div>
+</div>

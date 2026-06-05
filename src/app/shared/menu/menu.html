@@ -1,0 +1,18 @@
+<div class="container">
+  <span class="headerTitle">{{headerTitle}}</span>
+  <div class="dropdown-list">
+    <div class="menu-item" *ngFor="let item of choices; let i = index">
+      <label>
+        <input
+          type="radio"
+          [name]="groupName"
+          [value]="item.value"
+          [ngModel]="selectedValue"
+          (ngModelChange)="onSelectionChange(item.value)"
+          class="custom-radio"
+        />
+        {{item.label}}
+      </label>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,77 @@
+.container{
+    display: flex;
+    width: 280px;
+    padding:8px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius:12px;
+    border: 1xp solid var(--color-neutral-700);
+    background: var(--color-neutral-800);
+}
+.headerTitle{
+    font-family: "Inter",sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-neutral-300);
+    display: flex;
+    height: 38px;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 8px;
+}
+.menu-item{
+    display:flex;
+    padding:8px;
+    align-items:center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 8px;
+    color:var(--color-neutral-300);
+    font-size: 16px;
+    font-weight: 500;
+    font-family: "Inter",sans-serif;
+}
+input[type="radio"].custom-radio {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 1px solid var(--color-neutral-500); /* Default unselected border color */
+  border-radius: 50%;
+  outline: none;
+  cursor: pointer;
+  display: inline-grid;
+  place-content: center;
+  vertical-align: middle;
+}
+
+/* 2. Style for the inner dot (hidden by default) */
+input[type="radio"].custom-radio::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  background-color: #ff5722; /* Custom checked dot color */
+}
+
+/* 3. Border color when checked */
+input[type="radio"].custom-radio:checked {
+  border-color: var(--color-neutral-500); /* Custom checked border color */
+  color:var(--color-neutral-0);
+}
+
+/* 4. Show the inner dot when checked */
+input[type="radio"].custom-radio:checked::before {
+  transform: scale(1);
+}
+.dropdown-list{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    align-self: stretch;
+}

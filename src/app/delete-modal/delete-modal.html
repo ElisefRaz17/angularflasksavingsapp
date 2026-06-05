@@ -1,0 +1,31 @@
+<div class="overlay" *ngIf="isOpen" (click)="onClose()">
+  <dialog class="container" (click)="onContainerClick($event)">
+    <svg
+      class="close-icon"
+      (click)="onClose()"
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 20 20"
+      fill="none"
+    >
+      <path
+        d="M15 5L5 15M5 5L15 15"
+        stroke="#898A8B"
+        stroke-width="1.66667"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+    <span class="modal-header">Delete {{goalName}}</span>
+    <p class="message">
+      This will permanently delete this goal and all its deposit history. This
+      cannot be undone.
+    </p>
+    <hr class="divider"/>
+    <div class="action-buttons-container">
+      <app-button variant="secondary">Cancel</app-button>
+      <app-button variant="danger">Delete goal</app-button>
+    </div>
+  </dialog>
+</div>

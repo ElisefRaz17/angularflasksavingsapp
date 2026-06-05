@@ -1,0 +1,29 @@
+<div class="register-container">
+  <img src="../../assets/Quote Section.png" class="quote-section"/>
+
+  <div class="register-header">
+    <img src="../../assets/logo-large.svg" />
+    <div class="register-title-container">
+      <span class="register-title">Create your account</span>
+      <span class="register-subheader">Start tracking your savings goals</span>
+    </div>
+    <div class="register-input-container">
+      <app-input
+        [(ngModel)]="full_name"
+        label="Full name"
+      ></app-input>
+
+      <app-input
+        [(ngModel)]="email"
+        label="Email address"
+      ></app-input>
+      <app-input [(ngModel)]="password" label="Password"></app-input>
+      <app-button (click)="addUser()">Create account</app-button>
+      <div class="sub-links-container">
+        <label class="already-text">Already have an account?</label
+        ><a routerLink="/login" class="sign-link">Sign in</a>
+      </div>
+      <!-- <button (click)="addUser()">Add User</button> -->
+    </div>
+  </div>
+</div>

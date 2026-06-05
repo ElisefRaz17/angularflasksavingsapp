@@ -1,0 +1,15 @@
+<div>
+    <div class="card-header">
+        <div class="goalName">{{goalName}}</div>
+        <span class="tag">{{tag}}</span>
+    </div>
+    <span class="percentage">{{progress}}%</span>
+    <span class="progress-bar-container">
+        <div class="progress-bar-track">
+            <div class="progress-bar-fill" [style.width.%]="progress"></div>
+        </div>
+    </span>
+    <div class="card-footer">
+        <span>{{currentAmount}} of {{goalAmount}}</span>
+    </div>
+</div>
