@@ -50,7 +50,7 @@ export class AuthService {
   // Forgot Password: Sends a reset link to the user's email
   async sendPasswordReset(email: string) {
     return await this.supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "http://localhost:4200/update-password",
+      redirectTo: "https://angularsavingstracker-5329kw2kp-elises-projects-7f81aa22.vercel.app/update-password",
     });
   }
 

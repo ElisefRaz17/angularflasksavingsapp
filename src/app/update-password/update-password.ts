@@ -30,9 +30,6 @@ export class UpdatePassword {
   confirmPassword = "";
   constructor(private http: HttpClient) {}
   isValid() {
-    console.log('Password',this.password);
-    console.log('Confirm Password', this.confirmPassword)
-    console.log('Condition',this.password.length >= 8 && this.password === this.confirmPassword && this.password.length !== 0 && this.confirmPassword.length !== 0)
     return this.password.length >= 8 && this.password === this.confirmPassword;
   }
   
