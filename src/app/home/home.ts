@@ -1,26 +1,15 @@
-import { Component } from '@angular/core';
-import { Card } from '../shared/card/card';
-import { GoalCard } from '../goal-card/goal-card';
-import { Modal } from '../shared/modal/modal';
+import { Component, inject } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+
 
 @Component({
   selector: 'app-home',
-  imports: [GoalCard, Modal],
+  imports: [],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home {
-  headerTitle="HEader Title"
-    themeOptions: any[] = [
-    { label: 'Light Mode', value: 'light' },
-    { label: 'Dark Mode', value: 'dark' },
-    { label: 'System Default', value: 'system', disabled: true }
-  ];
-
-  selectedTheme = 'light';
-
-  handleThemeChange(value: string | number) {
-    console.log('New theme selected:', value);
-    // Update theme logic here
-  }
+  // private authService = inject(AuthService);
+  // user = this.authService.getCurrentUser();
+ 
 }
