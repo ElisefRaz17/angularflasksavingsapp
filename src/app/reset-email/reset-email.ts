@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, ChangeDetectionStrategy } from "@angular/core";
 import { CustomInput } from "../shared/input/input";
 import { CustomButton } from "../shared/button/button";
 import { HttpClient } from "@angular/common/http";
@@ -9,6 +9,7 @@ import { Route, Router } from "@angular/router";
   selector: "app-reset-email",
   imports: [CustomButton],
   templateUrl: "./reset-email.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: "./reset-email.css",
 })
 export class ResetEmail {

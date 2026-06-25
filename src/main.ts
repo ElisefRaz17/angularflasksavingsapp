@@ -2,7 +2,7 @@ import {
   bootstrapApplication,
   provideProtractorTestingSupport,
 } from "@angular/platform-browser";
-import { APP_INITIALIZER, Component } from "@angular/core";
+import { APP_INITIALIZER, Component, ChangeDetectionStrategy } from "@angular/core";
 import { Navbar } from "./app/navbar/navbar";
 import { NavigationEnd, provideRouter, Router, RouterLink, RouterOutlet } from "@angular/router";
 import { routeConfig } from "./app/routes";
@@ -18,6 +18,7 @@ import { AuthService } from "./app/services/auth.service";
   selector: "app-root",
   standalone: true,
   imports: [Navbar,RouterLink,CommonModule, RouterOutlet,AppRoutingModule],
+  changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <main>
       <a [routerLink]="['/']">

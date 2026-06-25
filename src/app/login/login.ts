@@ -1,4 +1,4 @@
-import { Component, inject } from "@angular/core";
+import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
 import { CustomInput } from "../shared/input/input";
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from "../services/auth.service";
@@ -16,6 +16,7 @@ import {
   standalone: true,
   imports: [CustomInput, RouterLink,CustomButton, FormsModule],
   templateUrl: "./login.html",
+    changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: "./login.css",
 })
 export class Login {

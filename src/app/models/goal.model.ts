@@ -1,7 +1,7 @@
 export interface Goal{
-    deadline?:Date;
+    deadline?:string;
     id?:number;
     name:string;
-    target_amount:number;
+    target_amount:number|null;
     user_id:string;
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { CustomInput } from '../shared/input/input';
 import { CustomButton } from '../shared/button/button';
 import { HttpClient } from '@angular/common/http';
