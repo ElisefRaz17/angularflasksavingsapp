@@ -1,0 +1,16 @@
+<div class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 max-w-sm w-full">
+      @for (toast of toastService.toasts(); track toast.id) {
+        <div 
+          [ngClass]="{
+            'bg-emerald-50 text-emerald-800 border-emerald-200': toast.type === 'success',
+            'bg-rose-50 text-rose-800 border-rose-200': toast.type === 'error',
+            'bg-blue-50 text-blue-800 border-blue-200': toast.type === 'info'
+          }"
+          class="flex items-center justify-between p-4 rounded-xl border shadow-lg transition-all duration-300"
+          role="alert"
+        >
+          <span>{{ toast.message }}</span>
+          <button (click)="toastService.remove(toast.id)" class="ml-4 p-1 rounded-lg hover:bg-black/5">✕</button>
+        </div>
+      }
+    </div>

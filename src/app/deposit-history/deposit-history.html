@@ -1,0 +1,24 @@
+<div class="flex flex-col items-start gap-4 flex-[1_0_0]">
+    @if(deposits$ | async; as deposits){
+        @if(deposits.length > 0){
+    <div class="flex justify-between items-center self-stretch">
+        <span class="text-neutral-0 text-xl font-semibold">Deposit History</span>
+
+            <span class="text-neutral-300 text-sm font-medium">{{sum$ | async}} deposits</span>
+    </div>
+    <div class="flex flex-col items-start self-stretch">
+        <hr class="h-px self-stretch bg-neutral-800"/>
+        @for(deposit of deposits; track deposit.id){
+        <div id="deposit-item" class="flex py-4 justify-center items-center gap-2.5 self-stretch">
+            <img src="../../assets/deposit-icon.png"/>
+            <div id="item-info" class="flex flex-col items-start gap-0.5 flex-[1_0_0]">
+                <span class="text-neutral-0 text-sm font-medium">{{deposit.note}}</span>
+                <span class="text-neutral-300 font-medium text-sm">{{deposit.created_at | date:"MM dd yyy"}}</span>
+            </div>
+            <span class="text-green-500 text-[16px] font-semibold">+${{deposit.amount}}</span>
+        </div>
+    }
+    </div>
+}
+}
+</div>

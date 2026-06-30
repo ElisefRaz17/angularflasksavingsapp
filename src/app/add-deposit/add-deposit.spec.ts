@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Modal } from './modal';
+import { AddDeposit } from './add-deposit';
 
-describe('Modal', () => {
-  let component: Modal;
-  let fixture: ComponentFixture<Modal>;
+describe('AddDeposit', () => {
+  let component: AddDeposit;
+  let fixture: ComponentFixture<AddDeposit>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Modal]
+      imports: [AddDeposit]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Modal);
+    fixture = TestBed.createComponent(AddDeposit);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

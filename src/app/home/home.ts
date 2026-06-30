@@ -1,10 +1,12 @@
 import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
+import { MonthlyDeposits } from "../monthly-deposits/monthly-deposits";
+import { Goals } from "../goals/goals";
 
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [MonthlyDeposits, Goals],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

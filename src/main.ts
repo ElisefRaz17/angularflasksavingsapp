@@ -12,12 +12,13 @@ import { AppRoutingModule, routes } from "./app/app-routing.module";
 import { filter } from "rxjs/operators";
 import { CommonModule } from "@angular/common";
 import { AuthService } from "./app/services/auth.service";
+import { ToastContainer } from "./app/toast-container/toast-container";
 
 
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [Navbar,RouterLink,CommonModule, RouterOutlet,AppRoutingModule],
+  imports: [Navbar, RouterLink, CommonModule, RouterOutlet, AppRoutingModule, ToastContainer],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <main>
@@ -26,6 +27,7 @@ import { AuthService } from "./app/services/auth.service";
       </a>
       <section class="content">
         <router-outlet></router-outlet>
+        <app-toast-container></app-toast-container>
       </section>
     </main>
   `,

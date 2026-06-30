@@ -1,0 +1,26 @@
+<div class="flex flex-col w-330">
+  <div class="flex item-start gap-6 self-stretch justify-between w-full">
+    <h1 class="flex-[1_0_0] text-white font-inter font-bold text-[32px]">
+      Your goals
+    </h1>
+    <div id="controls" class="flex items-center gap-4">
+      <app-button [icon]="faFilter" variant="secondary"> Filters</app-button>
+      <app-button variant="secondary">Sort by</app-button>
+    </div>
+
+  </div>
+      <div id="goals" class="flex flex-wrap items-start gap-6 self-stretch">
+       @if(goals$ | async; as goals){
+        @if(goals.length > 0){
+          @for(goal of goals; track goal.id){
+              <app-goal-card size="wide" id={{goal.id}} title={{goal.name}} deadline={{goal.deadline}} (click)="onCardClick(goal)" goalAmount={{goal.target_amount}} currentAmount={{goal.current_amount}} [state]="goal.current_amount !== 0 ? 'in-progress' : 'no-progress'"></app-goal-card>
+          }
+        } @else {
+            <p>No goals found.</p>
+        }
+       } @else {
+            <p>Loading data...</p>
+        }
+    
+    </div>
+</div>

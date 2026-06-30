@@ -1,16 +1,19 @@
 import { CommonModule } from "@angular/common";
 import { Component, EventEmitter, Input, input, ChangeDetectionStrategy, Output } from "@angular/core";
-export type ButtonVariant = "primary" | "secondary" | "danger";
+import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
+import { IconDefinition } from "@fortawesome/free-solid-svg-icons";
+export type ButtonVariant = "primary" | "secondary" | "tertiary" | "danger";
 @Component({
   selector: "app-button",
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,FontAwesomeModule],
   templateUrl: "./button.html",
   changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: "./button.css",
 })
 export class CustomButton {
   @Input() disabled: boolean = false;
+  @Input() icon?: IconDefinition;
   @Input() variant: ButtonVariant = "primary";
   @Input() btnClick = new EventEmitter<void>();
   @Output() onClick = new EventEmitter<void>();

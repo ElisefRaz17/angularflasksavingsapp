@@ -1,4 +1,5 @@
 import { Injectable, signal } from '@angular/core';
+import { Goal } from './models/goal.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,10 +9,12 @@ export class DataSharing {
   private goalNameSignal = signal<string>('');
   private goalAmount = signal<number>(0);
   private goalDeadline = signal<Date | undefined>(undefined);
+  private goalDetailsSignal = signal<any| undefined>(undefined);
   readonly currentEmail = this.emailSignal.asReadonly();
   readonly currentGoalName = this.goalNameSignal.asReadonly();
   readonly currentGoalAmount = this.goalAmount.asReadonly();
   readonly currentGoalDeadline = this.goalDeadline.asReadonly();
+  readonly goalDetails = this.goalDetailsSignal.asReadonly();
   updateEmail(newEmail: string){
     this.emailSignal.set(newEmail);
   }
@@ -23,5 +26,8 @@ export class DataSharing {
   }
   updateDeadLine(goalDeadline:Date|undefined){
     this.goalDeadline.set(goalDeadline)
+  }
+  getGoalDetails(goalDetails:any){
+    this.goalDetailsSignal.set(goalDetails)
   }
 }

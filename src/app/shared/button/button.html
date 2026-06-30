@@ -4,5 +4,8 @@
   [disabled]="disabled"
   [ngClass]="buttonClasses"
   class="btn">
+  <span *ngIf="icon" class="icon">
+      <fa-icon [icon]="icon"></fa-icon>
+  </span>
   <ng-content></ng-content>
 </button>

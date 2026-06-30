@@ -14,6 +14,12 @@
     font-weight: 500;
     font-family: "Inter",sans-serif;
     width: 100%;
+    color: white;
+}
+.btn-icon{
+    font-size: 24px;
+    width: 20px;
+    height: 20px;
 }
 
 .btn:disabled, .btn-disabled {
@@ -30,6 +36,10 @@
     background-color: var(--color-neutral-800);
     color: var(--color-neutral-0);
     border-color:var(--color-neutral-600);
+}
+.btn-teritary{
+    color: white;
+    background-color: transparent;
 }
 
 .btn-danger{

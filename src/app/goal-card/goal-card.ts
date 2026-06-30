@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, Input } from '@angular/core';
+import { Component, computed, inject, Input } from '@angular/core';
+import { DataSharing } from '../data-sharing';
 
 export type CardSize = "default" | "wide" | "tall";
 export type CardState = "no-progress" | "in-progress" | "complete" ;
@@ -12,10 +13,11 @@ export type CardState = "no-progress" | "in-progress" | "complete" ;
   styleUrl: './goal-card.css',
 })
 export class GoalCard {
+  private dataService = inject(DataSharing)
   @Input({required:true}) title!:string;
-  @Input() currentAmount!: number;
-  @Input() goalAmount!: number;
-
+  @Input() currentAmount!: any;
+  @Input() goalAmount!: any;
+  @Input() deadline!:string;
   @Input() size: CardSize = 'default';
   @Input() state: CardState = 'no-progress';
 
@@ -28,9 +30,9 @@ export class GoalCard {
   // Size variant mapping
   protected sizeClasses = computed(() => {
     const classes: Record<CardSize, { card: string; title: string; amount: string; progressTrack: string }> = {
-      default: { card: 'p-5 max-w-sm', title: 'text-xl text-neutral-0', amount: 'text-sm', progressTrack: 'h-2.5'},
-      wide: { card: 'p-5 max-w-lg', title: 'text-base', amount: 'text-xl', progressTrack: 'h-2.5' },
-      tall: { card: 'p-6 max-w-md', title: 'text-lg', amount: 'text-2xl', progressTrack: 'h-4' }
+      default: { card: 'p-5 h-[240px] flex-[1_0_0]', title: 'text-xl text-neutral-0', amount: 'text-sm', progressTrack: 'h-2.5'},
+      wide: { card: 'p-5  self-stretch h-[240px] w-[838px]', title: 'text-base', amount: 'text-xl', progressTrack: 'h-2.5' },
+      tall: { card: 'p-6 max-w-md h-[504px]', title: 'text-lg', amount: 'text-2xl', progressTrack: 'h-4' }
     };
     return classes[this.size];
   });

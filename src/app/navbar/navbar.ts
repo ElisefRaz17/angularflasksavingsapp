@@ -1,6 +1,5 @@
 import { Component, inject, Input, ChangeDetectionStrategy, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CustomButton } from "../shared/button/button";
-import { Modal } from '../shared/modal/modal';
 import { AuthService } from '../services/auth.service';
 import { GoalService } from '../services/goal.service';
 import { GoalModal } from '../goal-modal/goal-modal';

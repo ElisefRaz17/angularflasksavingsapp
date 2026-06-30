@@ -1,0 +1,26 @@
+<div class="flex px-20 py-12 gap-8 self-stretch flex-col">
+<div class="flex flex-col items-center gap-2.5 self-stretch">
+    <div class="flex justify-between items-center self-stretch">
+        <app-button (click)="navigateBack()" variant="tertiary" [icon]="faBackArrow" class="text-neutral-600">Back</app-button>
+        <div id="actions" class="flex items-center gap-2">
+            <app-button variant="tertiary">Edit goal</app-button>
+            <button class="flex py-3 px-4 justify-center items-center gap-2.5 rounded-full text-[16px] font-medium text-red-500">Delete goal</button>
+        </div>
+    </div>
+    @if(dataService.goalDetails(); as goal){
+    <h1 class="text-white text-[64px] font-semibold self-stretch">{{goal.name}}</h1>
+    <div class="flex items-start gap-3 self-stretch">
+        <span class="text-neutral-300 text-[16px] font-medium">Due {{goal.deadline | date:"d MMM y"}}</span>
+        •
+        <span class="text-neutral-300">Created {{goal.created_at | date:"MMM dd y"}}</span>
+    </div>
+    <div id="goals-section" class="flex items-start gap-12 self-stretch">
+        <div class="flex flex-col items-start gap-6">
+        <app-goal-card size="wide" title={{goal.name}} deadline={{goal.deadline}}  goalAmount={{goal.target_amount}} currentAmount={{goal.current_amount}} [state]="goal.current_amount !== 0 ? 'in-progress' : 'no-progress'"></app-goal-card>
+        <app-add-deposit></app-add-deposit>
+        </div>
+        <app-deposit-history></app-deposit-history>
+    </div>
+}
+</div>
+</div>

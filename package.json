@@ -20,6 +20,8 @@
     "@fortawesome/free-solid-svg-icons": "^7.2.0",
     "@supabase/supabase-js": "^2.106.1",
     "@tailwindcss/postcss": "^4.3.0",
+    "chart.js": "^4.5.1",
+    "ng2-charts": "^10.0.0",
     "postcss": "^8.5.15",
     "rxjs": "^7.8.1",
     "tailwindcss": "^4.3.0",

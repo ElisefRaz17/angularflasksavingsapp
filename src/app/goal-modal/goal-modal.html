@@ -1,48 +1,3 @@
-<!-- <dialog #goalDialog class="container" *ngIf="isModalOpen" (close)="closeModal()">
-  <svg
-    class="close-icon"
-    (click)="closeModal()"
-    xmlns="http://www.w3.org/2000/svg"
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-  >
-    <path
-      d="M15 5L5 15M5 5L15 15"
-      stroke="#898A8B"
-      stroke-width="1.66667"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
-  </svg>
-  <span class="modal-header">{{isEditMode ? 'Edit Goal' :'New Goal'}}</span>
-  <hr class="divider" />
-  <form [formGroup]="goalForm" (ngSubmit)="onSubmit()" class="w-full">
-    <app-input
-      id="name"
-      type="text"
-      label="Goal name"
-      formControlName="name"
-    ></app-input>
-    <app-input
-      id="target_amount"
-      label="Target amount"
-      [icon]="faDollarSign"
-    ></app-input>
-    <app-input
-      type="date"
-      id="deadline"
-      label="Deadline (optional)"
-      [icon]="faCalendar"
-    ></app-input>
-    <div class="action-buttons-container">
-      <app-button variant="secondary" (click)="closeModal()">Cancel</app-button>
-      <app-button type="submit">{{isEditMode ? 'Edit Goal':'Create Goal'}}</app-button>
-    </div>
-  </form>
-<!-- </dialog> -->
-
 <div class="modal-overlay">
   <dialog class="modal-content">
     <div class="modal-header">
@@ -105,6 +60,14 @@
 
 
       <div class="action-buttons-container">
+        <div *ngIf="isLoading"
+          class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-surface motion-reduce:animate-[spin_1.5s_linear_infinite] dark:text-white"
+          role="status">
+          <span
+            class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
+            >Loading...</span
+          >
+        </div>
         <app-button variant="secondary" (click)="onClose()">Cancel</app-button>
                 <app-button (onClick)="onSubmit()" form="goalForm"[disabled]="!goalForm.valid"
           >{{isEdit ? 'Edit Goal':'Create Goal'}}</app-button
