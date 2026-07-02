@@ -26,6 +26,15 @@ export class GoalService {
   getGoals():Observable<any[]>{
     return this.http.get<any[]>(this.apiUrl,{headers:this.headers});
   }
+  updateGoal(goalId:any,goal:any):Observable<any>{
+    this.loadingSubject.next(true);
+    return this.http.put(`${this.apiUrl}/${goalId}`,goal,{headers:this.headers}).pipe(
+     finalize(()=>{
+      this.loadingSubject.next(false)
+
+     })
+    )
+  }
   createGoal(goal: Goal): Observable<Goal> {
     this.loadingSubject.next(true);
     return this.http.post<Goal>(this.apiUrl, goal,{headers:this.headers}).pipe(

@@ -18,13 +18,13 @@ import { ToastContainer } from "./app/toast-container/toast-container";
 @Component({
   selector: "app-root",
   standalone: true,
-  imports: [Navbar, RouterLink, CommonModule, RouterOutlet, AppRoutingModule, ToastContainer],
+  imports: [Navbar, CommonModule, RouterOutlet, AppRoutingModule, ToastContainer],
   changeDetection: ChangeDetectionStrategy.Eager,
   template: `
     <main>
-      <a [routerLink]="['/']">
+      <!-- <a [routerLink]="['/']"> -->
         <app-navbar *ngIf="showNavbar"></app-navbar>
-      </a>
+      <!-- </a> -->
       <section class="content">
         <router-outlet></router-outlet>
         <app-toast-container></app-toast-container>

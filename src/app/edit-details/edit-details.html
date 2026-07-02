@@ -3,8 +3,8 @@
     <div class="flex justify-between items-center self-stretch">
         <app-button (click)="navigateBack()" variant="tertiary" [icon]="faBackArrow" class="text-neutral-600">Back</app-button>
         <div id="actions" class="flex items-center gap-2">
-            <app-button variant="tertiary">Edit goal</app-button>
-            <button class="flex py-3 px-4 justify-center items-center gap-2.5 rounded-full text-[16px] font-medium text-red-500">Delete goal</button>
+            <app-button variant="tertiary" (onClick)="isOpen = true">Edit goal</app-button>
+            <button class="flex py-3 px-4 justify-center items-center gap-2.5 rounded-full text-[16px] font-medium text-red-500"(click)="isDeleteOpen=true">Delete goal</button>
         </div>
     </div>
     @if(dataService.goalDetails(); as goal){
@@ -24,3 +24,15 @@
 }
 </div>
 </div>
+<ng-container *ngIf="isOpen">
+      <app-goal-modal
+    [isEdit]="true"
+    (close)="closeGoalModal()"
+    /* (close)="isModalOpen = false" */
+    (save)="handleSave($event)"
+  >
+  </app-goal-modal>
+</ng-container>
+<ng-container *ngIf="isDeleteOpen">
+    <app-delete-modal (close)="closeDeleteModal()"></app-delete-modal>
+</ng-container>

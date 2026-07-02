@@ -1,15 +1,12 @@
 <nav class="nav-container">
   <img src="assets/logo-large.svg" />
-  <!-- <button class="add-goal-btn">
-    <img src="assets/icon-plus.svg" />
-    <label class="add-goal-label">New Goal</label>
-  </button> -->
-
-  <app-button class="height:24px" (click)="openCreateGoal()">
+<!-- <button type="button" class="bg-orange-400 text-white"(click)="openCreateGoal()">New Goal</button> --> -->
+    <app-button type="button" class="height:24px" (click)="openCreateGoal()">
     <img src="assets/icon-plus.svg" />
     New Goal</app-button
-  >
+  > 
 </nav>
+
 <!-- <app-modal header="New goal" [isOpen]="openModal" (close)="handleOpenModal()"></app-modal> -->
 <!-- <app-goal-modal
     *ngIf="isModalOpen"
@@ -21,6 +18,7 @@
     >
   </app-goal-modal> -->
 <ng-container *ngIf="isModalOpen">
+  <!-- <app-create-goal-modal></app-create-goal-modal> -->
   <app-goal-modal
     [isEdit]="isEditing"
     (close)="closeGoalModal()"

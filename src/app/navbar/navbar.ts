@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [CustomButton,GoalModal,CommonModule],
+  imports: [CustomButton, GoalModal, CommonModule],
   standalone: true,
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
@@ -43,6 +43,15 @@ export class Navbar {
   //   console.log('Goal saved or edited:', goalData);
   //   // Add logic here to send goalData to a service or state store
   // }
+    @Output() openModalEvent = new EventEmitter<void>();
+
+  toggleModal(event: Event) {
+    // 1. Stops the click from bubbling up (prevents navigation/page reload)
+    event.stopPropagation(); 
+    
+    // 2. Your logic to set your boolean variable to true
+    this.openModalEvent.emit();
+  }
  closeGoalModal(){
   this.isModalOpen = false;
  }

@@ -1,6 +1,7 @@
 import { CommonModule } from "@angular/common";
 import {
   Component,
+  effect,
   ElementRef,
   EventEmitter,
   inject,
@@ -25,6 +26,7 @@ import { AuthService } from "../services/auth.service";
 import { GoalService } from "../services/goal.service";
 import { HttpHeaders } from "@angular/common/http";
 import { finalize } from "rxjs";
+import { DataSharing } from "../data-sharing";
 
 @Component({
   selector: "app-goal-modal",
@@ -39,6 +41,7 @@ export class GoalModal implements OnInit {
   @Input() isEdit = false;
   private authService = inject(AuthService);
   private goalService = inject(GoalService);
+  private dataService = inject(DataSharing)
   faDollarSign = faDollar;
   faCalendar = faCalendar;
   name = "";
@@ -47,11 +50,24 @@ export class GoalModal implements OnInit {
   user_id = "";
   token = "";
   isLoading = false;
+  goalId = ''
 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Goal>();
 
+  // constructor(){
+  //   effect(()=>{
+  //     const goal = this.dataService.goalDetails();
+  //     if(this.goalForm && goal){
+  //       this.goalForm.patchValue(goal)
+  //     }else if(this.goalForm){
+  //       this.goalForm.reset()
+  //     }
+  //   })
+  // }
   ngOnInit(): void {
+    this.goalId = this.dataService.goalDetails().id
+
     this.goalForm = new FormGroup({
       name: new FormControl("", [Validators.required]),
       deadline: new FormControl(null),
@@ -62,10 +78,18 @@ export class GoalModal implements OnInit {
         this.user_id = response.id;
       }
     });
+    if(this.isEdit){
+            const goal = this.dataService.goalDetails();
+      if(this.goalForm && goal){
+        this.goalForm.patchValue(goal)
+      }else if(this.goalForm){
+        this.goalForm.reset()
+      }
+    }
   }
   onClose() {
-    this.close.emit();
     this.goalForm.reset();
+    this.close.emit();
   }
   onModalContentClick(event: MouseEvent) {
     event.stopPropagation();
@@ -73,10 +97,23 @@ export class GoalModal implements OnInit {
 
   onSubmit() {
     this.isLoading = true;
-    if (this.goalForm.valid) {
+    if (this.goalForm.valid && !this.isEdit) {
       this.goalService
         .createGoal({ ...this.goalForm.value, user_id: this.user_id })
         .pipe(finalize(() => (this.isLoading = false)))
+        .subscribe({
+          next: (response) => {
+            console.log("Success", response);
+            this.onClose();
+          },
+          error: (error) => {
+            console.error("API error", error);
+          },
+        });
+    }else{
+      this.isLoading = true;
+      this.goalService.updateGoal(this.goalId,{...this.goalForm.value,user_id:this.user_id})
+       .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {
             console.log("Success", response);
