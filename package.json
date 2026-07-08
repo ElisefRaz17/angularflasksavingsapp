@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node -r dotenv/config set-env.js && ng serve",
     "build": "ng build"
   },
   "dependencies": {
@@ -21,6 +21,7 @@
     "@supabase/supabase-js": "^2.106.1",
     "@tailwindcss/postcss": "^4.3.0",
     "chart.js": "^4.5.1",
+    "dotenv": "^17.4.2",
     "ng2-charts": "^10.0.0",
     "postcss": "^8.5.15",
     "rxjs": "^7.8.1",
