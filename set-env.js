@@ -8,7 +8,7 @@ if (!fs.existsSync(envDir)) {
 }
 
 // Define paths
-const targetPath = path.join(envDir, 'environment.ts');
+const targetPath = path.join(envDir, './src/environments/environment.production.ts');
 
 // Create the contents of the environment file dynamically
 const envConfigFile = `export const environment = {

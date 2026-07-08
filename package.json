@@ -4,7 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --configuration production"
+    "config": "node set-env.js",
+    "build": "npm run config && ng build --configuration production"
+
   },
   "dependencies": {
     "@angular/cdk": "^21.2.12",
