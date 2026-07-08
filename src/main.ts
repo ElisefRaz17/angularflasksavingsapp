@@ -11,7 +11,6 @@ import { Login } from "./app/login/login";
 import { AppRoutingModule, routes } from "./app/app-routing.module";
 import { filter } from "rxjs/operators";
 import { CommonModule } from "@angular/common";
-import { AuthService } from "./app/services/auth.service";
 import { ToastContainer } from "./app/toast-container/toast-container";
 
 
