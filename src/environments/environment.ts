@@ -1,7 +1,5 @@
-import * as dotenv from 'dotenv';
-dotenv.config();
 export const environment = {
     production:false,
-    supabaseUrl: `${process.env['API_URL']}`,
-    supabaseKey:`${process.env['API_KEY']}`
+    supabaseUrl: 'https://pgamtmhyimytcousdhtm.supabase.co',
+    supabaseKey:'sb_publishable_2fTdCp6sNosFH-R-Fzlijw_KL6ovFB_'
 };
