@@ -4,23 +4,44 @@
       Your goals
     </h1>
     <div id="controls" class="flex items-center gap-4">
-      <app-button [icon]="faFilter" variant="secondary"> Filters</app-button>
-      <app-button variant="secondary">Sort by</app-button>
+      <app-button
+        [icon]="faFilter"
+        variant="secondary"
+        (onClick)="onOpenFilter()"
+      >
+        Filters</app-button
+      >
+      <app-button variant="secondary" (onClick)="onOpenSortBy()"
+        >Sort by</app-button
+      >
     </div>
-
   </div>
-      <div id="goals" class="flex flex-wrap items-start gap-6 self-stretch">
-       @if(goals$ | async; as goals){
-        @if(goals.length > 0){
-          @for(goal of goals; track goal.id){
-              <app-goal-card size="wide" id={{goal.id}} title={{goal.name}} deadline={{goal.deadline}} (click)="onCardClick(goal)" goalAmount={{goal.target_amount}} currentAmount={{goal.current_amount}} [state]="goal.current_amount !== 0 ? 'in-progress' : 'no-progress'"></app-goal-card>
-          }
-        } @else {
-            <p>No goals found.</p>
-        }
-       } @else {
-            <p>Loading data...</p>
-        }
-    
-    </div>
+  <div id="goals" class="flex flex-wrap items-start gap-6 self-stretch">
+    @if(goals$ | async; as allGoals){
+    <app-goal-card
+      *ngFor="let goal of allGoals | goalFilter:activeFilterFn | filterSort: selectedSort:activeFilterFn"
+      [size]="cardState"
+      [id]="goal.id"
+      [title]="goal.name"
+      [deadline]="goal.deadline"
+      (click)="onCardClick(goal)"
+      [goalAmount]="goal.target_amount"
+      [currentAmount]="goal.current_amount"
+      [state]="(goal.current_amount / goal.target_amount) * 100 === 100 ? 'complete':(goal.current_amount / goal.target_amount) * 100 !==0?'in-progress':'no-progress'"
+    ></app-goal-card>
+
+    }@else {
+    <p class="text-orange-400 text-4xl">Loading data...</p>
+    }
+  </div>
 </div>
+<ng-container *ngIf="openFilterMenu()">
+  <app-menu
+    [choices]="filterChoices"
+    (filterChanged)="applyFilter($event)"
+    headerTitle="FILTER BY STATUS"
+  />
+</ng-container>
+<ng-container *ngIf="openSortMenu()">
+ <app-filter-menu-component [options]="sortOptions" groupId="sort" headerTitle="SORT BY" (selectionChange)="selectedSort = $event"></app-filter-menu-component>
+</ng-container>

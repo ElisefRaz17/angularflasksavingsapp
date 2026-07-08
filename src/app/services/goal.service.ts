@@ -43,4 +43,12 @@ export class GoalService {
       })
     );
   }
+  deleteGoal(goalId:any):Observable<any>{
+    this.loadingSubject.next(true);
+    return this.http.delete<any>(`${this.apiUrl}/${goalId}`, {headers:this.headers}).pipe(
+      finalize(()=>{
+        this.loadingSubject.next(false)
+      })
+    )
+  }
 }

@@ -8,6 +8,31 @@
   align-items: center;
   
 }
+.menu-container{
+    display: flex;
+    width: 280px;
+    padding:8px;
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius:12px;
+    border: 1xp solid var(--color-neutral-700);
+    background: var(--color-neutral-800);
+    position: absolute;
+    right: 150px;
+    top: 90px;
+}
+.menu-item{
+    display:flex;
+    padding:8px;
+    align-items:center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 8px;
+    color:var(--color-neutral-300);
+    font-size: 16px;
+    font-weight: 500;
+    font-family: "Inter",sans-serif;
+}
 .add-goal-btn{
   display: flex;
   gap: 16px;

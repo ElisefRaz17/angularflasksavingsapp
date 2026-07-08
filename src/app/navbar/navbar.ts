@@ -1,10 +1,12 @@
-import { Component, inject, Input, ChangeDetectionStrategy, ViewChild, Output, EventEmitter } from '@angular/core';
+import { Component, inject, Input, ChangeDetectionStrategy, ViewChild, Output, EventEmitter, signal } from '@angular/core';
 import { CustomButton } from "../shared/button/button";
 import { AuthService } from '../services/auth.service';
 import { GoalService } from '../services/goal.service';
 import { GoalModal } from '../goal-modal/goal-modal';
 import { Goal } from '../models/goal.model';
 import { CommonModule } from '@angular/common';
+import { faCircleUser } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -14,8 +16,10 @@ import { CommonModule } from '@angular/common';
   styleUrl: './navbar.css',
 })
 export class Navbar {
+  faPerson = faCircleUser;
   @Output() closeDialog = new EventEmitter<void>();
   @ViewChild(GoalModal) modal!:GoalModal;
+  openMenu = signal(false);
   isModalOpen = false;
   isEditing = false;
   modalTitle:string = 'Create Goal';
@@ -23,26 +27,11 @@ export class Navbar {
   deadline?: Date;
   targetAmount = 0;
   goals:Goal[] = []
-  constructor() {
+
+  constructor(private router:Router) {
 
   }
-  
-  // openCreateModal(){
-  //   this.modalTitle = 'Create Goal';
-  //   this.isModalOpen = true;
-  //   this.activeGoal ={name:'', target_amount:null, deadline:'',user_id:''}
-  //   // this.modal.openModal()
-  // }
-  // openEditModal(goal:Goal){
-  //   this.modalTitle = 'Edit Goal';
-  //   this.isModalOpen = true;
-  //   this.activeGoal ={...goal};
-  // }
 
-  //   handleSaveGoal(goalData: any):void {
-  //   console.log('Goal saved or edited:', goalData);
-  //   // Add logic here to send goalData to a service or state store
-  // }
     @Output() openModalEvent = new EventEmitter<void>();
 
   toggleModal(event: Event) {
@@ -51,6 +40,11 @@ export class Navbar {
     
     // 2. Your logic to set your boolean variable to true
     this.openModalEvent.emit();
+  }
+  handleSignOut(){
+    localStorage.clear();
+    this.router.navigate(['/login'])
+
   }
  closeGoalModal(){
   this.isModalOpen = false;
@@ -70,5 +64,8 @@ export class Navbar {
 
   handleSave(goal: any) {
     console.log('Saved Goal:', goal);
+  }
+  onOpenMenu(){
+    this.openMenu.update((state)=>!state);
   }
 }

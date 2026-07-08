@@ -27,6 +27,7 @@ import { GoalService } from "../services/goal.service";
 import { HttpHeaders } from "@angular/common/http";
 import { finalize } from "rxjs";
 import { DataSharing } from "../data-sharing";
+import { ToastService } from "../services/toast";
 
 @Component({
   selector: "app-goal-modal",
@@ -41,7 +42,8 @@ export class GoalModal implements OnInit {
   @Input() isEdit = false;
   private authService = inject(AuthService);
   private goalService = inject(GoalService);
-  private dataService = inject(DataSharing)
+  private dataService = inject(DataSharing);
+  private toastService = inject(ToastService)
   faDollarSign = faDollar;
   faCalendar = faCalendar;
   name = "";
@@ -66,7 +68,7 @@ export class GoalModal implements OnInit {
   //   })
   // }
   ngOnInit(): void {
-    this.goalId = this.dataService.goalDetails().id
+    this.goalId = this.dataService.goalDetails()?.id
 
     this.goalForm = new FormGroup({
       name: new FormControl("", [Validators.required]),
@@ -103,11 +105,13 @@ export class GoalModal implements OnInit {
         .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {
-            console.log("Success", response);
+            this.toastService.show("Goal Created Successfully","success")
             this.onClose();
           },
           error: (error) => {
             console.error("API error", error);
+            this.toastService.show(error,"error")
+
           },
         });
     }else{
@@ -116,11 +120,14 @@ export class GoalModal implements OnInit {
        .pipe(finalize(() => (this.isLoading = false)))
         .subscribe({
           next: (response) => {
-            console.log("Success", response);
+            this.toastService.show("Goal Updated Successfully","success")
+
             this.onClose();
           },
           error: (error) => {
             console.error("API error", error);
+            this.toastService.show(error,"error")
+
           },
         });
     }

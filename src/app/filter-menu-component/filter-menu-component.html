@@ -1,15 +1,15 @@
 <div class="container">
   <span class="headerTitle">{{headerTitle}}</span>
   <div class="dropdown-list">
-    <div class="menu-item" *ngFor="let item of choices; let i = index">
+    <div class="menu-item" *ngFor="let item of options; let i = index">
       <label>
         <input
           type="radio"
-          [name]="groupName"
+          [name]="groupId"
           [value]="item.value"
           [checked]="selectedValue === item.value"
-          [(ngModel)]="selectedFilter"
-          (ngModelChange)="onFilterChange($event)"
+          [(ngModel)]="selectedValue"
+          (ngModelChange)="onSelectionChange()"
           class="custom-radio"
         />
         {{item.label}}

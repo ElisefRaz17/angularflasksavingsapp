@@ -27,6 +27,9 @@ export class GoalCard {
     return Math.min(Math.max(percentage, 0), 100); // Clamp between 0 and 100
   });
 
+  constructor(){
+    // this.state = this.progressPercentage() === 100 ? 'complete' : this.progressPercentage() !== 0 ? 'in-progress' : 'no-progress'
+  }
   // Size variant mapping
   protected sizeClasses = computed(() => {
     const classes: Record<CardSize, { card: string; title: string; amount: string; progressTrack: string }> = {
@@ -42,7 +45,7 @@ export class GoalCard {
     const classes: Record<CardState, { bar: string; text: string; bg: string }> = {
       'no-progress': { bar: 'bg-neutral-700', text: 'text-neutral-0', bg: 'bg-neutral-800' },
       'in-progress': { bar: 'bg-orange-400', text: 'text-orange-400', bg: 'bg-neutral-800' },
-      'complete': { bar: 'bg-emerald-500', text: 'text-emerald-700', bg: 'bg-emerald-50 border-emerald-200' }
+      'complete': { bar: 'bg-emerald-500', text: 'text-emerald-700', bg:'bg-neutral-800' }
     };
     return classes[this.state];
   });

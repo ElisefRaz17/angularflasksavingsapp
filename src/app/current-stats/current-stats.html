@@ -1,0 +1,14 @@
+<div class="flex items-start gap-6 self-stretch">
+    <div class="xl:w-156 p-5 flex-col flex justify-center items-start gap-8 self-stretch rounded-2xl border border-white bg-[linear-gradient(270deg,#FF5722)]">
+        <span class="text-white text-[16px] font-semibold">Total Savings</span>
+        <span class="text-white text-[64px] font-semibold">${{sum$ | async}} </span>
+    </div>
+    <div class="flex p-5 gap-8 items-start flex-col rounded-2xl border border-neutral-600 bg-neutral-800 flex-[1_0_0] w-76">
+        <span class="text-white text-[16px] font-semibold">Active goals</span>
+        <span class="text-orange-400 text-[64px] font-semibold">{{goalSum$ |async}}</span>
+    </div>
+    <div class="flex p-5 flex-col items-start gap-8 flex-[1_0_0] rounded-2xl border border-neutral-600 bg-neutral-800 w-76">
+        <span class="text-white text-[16px] font-semibold">Goals completed</span>
+        <span class="text-green-500 text-[64px] font-semibold">{{goalsCompleted$ | async}}</span>
+    </div>
+</div>

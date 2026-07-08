@@ -1,29 +1,31 @@
 <nav class="nav-container">
   <img src="assets/logo-large.svg" />
-<!-- <button type="button" class="bg-orange-400 text-white"(click)="openCreateGoal()">New Goal</button> --> -->
-    <app-button type="button" class="height:24px" (click)="openCreateGoal()">
-    <img src="assets/icon-plus.svg" />
-    New Goal</app-button
-  > 
+  <div class="flex items-center gap-1">
+    <app-button
+      [icon]="faPerson"
+      variant="secondary"
+      (onClick)="onOpenMenu()"
+    ></app-button>
+
+    <app-button type="button" class="height:24px" (onClick)="openCreateGoal()">
+      <img src="assets/icon-plus.svg" />
+      New Goal</app-button
+    >
+  </div>
 </nav>
 
-<!-- <app-modal header="New goal" [isOpen]="openModal" (close)="handleOpenModal()"></app-modal> -->
-<!-- <app-goal-modal
-    *ngIf="isModalOpen"
-    [title]="modalTitle"
-    [goalData]="activeGoal"
-    (save)="handleSaveGoal($event)"
-    (closeDialog)="isModalOpen = false"
-    /* (cancel)="handleCancel()" */
-    >
-  </app-goal-modal> -->
 <ng-container *ngIf="isModalOpen">
-  <!-- <app-create-goal-modal></app-create-goal-modal> -->
   <app-goal-modal
     [isEdit]="isEditing"
     (close)="closeGoalModal()"
-    /* (close)="isModalOpen = false" */
     (save)="handleSave($event)"
   >
   </app-goal-modal>
+</ng-container>
+<ng-container *ngIf="openMenu()">
+  <div class="menu-container">
+    <!-- <div  -->
+      <app-button class="menu-item" (onClick)="handleSignOut()">Sign Out</app-button>
+    <!-- </div> -->
+  </div>
 </ng-container>
