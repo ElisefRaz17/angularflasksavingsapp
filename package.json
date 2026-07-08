@@ -2,10 +2,9 @@
   "name": "angular-starter",
   "private": true,
   "scripts": {
-    "config":"node set-env.js",
     "ng": "ng",
-    "start": "npm run config && ng serve",
-    "build": "npm run config && ng build"
+    "start": "ng serve",
+    "build": "ng build --configuration production"
   },
   "dependencies": {
     "@angular/cdk": "^21.2.12",
