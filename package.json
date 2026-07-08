@@ -32,7 +32,7 @@
     "@angular/build": "^22.0.0",
     "@angular/cli": "^22.0.0",
     "@angular/compiler-cli": "^22.0.0",
-    "@types/node": "^25.9.1",
+    "@types/node": "^25.9.5",
     "postcss": "^8.5.3",
     "typescript": "^6.0.3"
   }
