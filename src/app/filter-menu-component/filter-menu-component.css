@@ -8,8 +8,7 @@
     border: 1xp solid var(--color-neutral-700);
     background: var(--color-neutral-800);
     position: absolute;
-    /* right: 0; */
-    left:0;
+    right: 0;
     margin-top: 0.5rem;
     z-index: 20;
 
