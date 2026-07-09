@@ -1,5 +1,10 @@
-<nav class="nav-container">
-  <img src="assets/logo-large.svg" />
+<nav class="flex w-full h-20 border-b border-neutral-800 justify-between items-center py-4 px-20 md:py-4 md:px-6 sm:px-4 sm:py-3 lg:w-190 xl:w-full">
+  <picture>
+    <source media="(min-width: 1024px)" srcset="assets/logo-large.svg">
+    <source media="(min-width: 768px)" srcset="assets/logo-small.svg">
+    <img src="assets/logo-small.svg" alt="logo"/>
+  </picture>
+
   <div class="flex items-center gap-1">
     <app-button
       [icon]="faPerson"

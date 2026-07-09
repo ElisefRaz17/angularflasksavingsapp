@@ -1,37 +1,36 @@
-<div class="login-container">
+<div
+  class="flex pt-0 px-4 xl:p-10 xl:gap-20 sm:h-203 xs:h-203 gap-8 self-stretch justify-center items-center"
+>
   <img src="../../assets/login-quote-section.png" class="quote-section" />
 
-  <div class="login-header">
-    <img src="../../assets/logo-large.svg" />
-    <div class="login-title-container">
-      <span class="login-title">Welcome back</span>
-      <span class="login-subheader">Sign in your account</span>
+  <div class="p-0 flex xl:w-160 sm:w-93.75  flex-col items-start gap-8 shrink-0">
+  <img src="../../assets/logo-large.svg" />
+  <div class="login-title-container">
+    <span class="login-title">Welcome back</span>
+    <span class="login-subheader">Sign in your account</span>
+  </div>
+  <div class="login-input-container">
+    <app-input
+      name="email"
+      [(ngModel)]="email"
+      label="Email address"
+      (ngModelChange)="onEmailChange($event)"
+    ></app-input>
+
+    <app-input
+      name="password"
+      [(ngModel)]="password"
+      label="Password"
+      (ngModelChange)="onPasswordChange($event)"
+    ></app-input>
+
+    <a routerLink="/reset-password" class="forgot-link">Forgot password?</a>
+
+    <app-button (click)="onSubmit()">Sign in</app-button>
+    <div class="sub-links-container">
+      <label class="already-text">Don't have an account?</label
+      ><a routerLink="/register" class="sign-link">Create one</a>
     </div>
-    <div class="login-input-container">
-      <app-input
-        name="email"
-        [(ngModel)]="email"
-        label="Email address"
-        (ngModelChange)="onEmailChange($event)"
-      ></app-input>
-
-      <app-input
-        name="password"
-        [(ngModel)]="password"
-        label="Password"
-        (ngModelChange)="onPasswordChange($event)"
-
-      ></app-input>
-
-      <a routerLink="/reset-password" class="forgot-link">Forgot password?</a>
-
-      <app-button (click)="onSubmit()">Sign in</app-button>
-      <div class="sub-links-container">
-        <label class="already-text">Don't have an account?</label
-        ><a routerLink="/register" class="sign-link">Create one</a>
-      </div>
-
-      <!-- <button (click)="addUser()">Add User</button> -->
-    </div>
+  </div>
   </div>
 </div>

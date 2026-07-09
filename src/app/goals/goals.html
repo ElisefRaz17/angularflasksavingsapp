@@ -1,26 +1,51 @@
-<div class="flex flex-col w-330">
-  <div class="flex item-start gap-6 self-stretch justify-between w-full">
-    <h1 class="flex-[1_0_0] text-white font-inter font-bold text-[32px]">
+<div class="flex flex-col self-stretch items-start">
+  <div
+    class="flex item-start gap-6 self-stretch md:flex-wrap sm:flex-wrap lg:flex-nowrap xl:flex-nowrap lg:w-180 xl:w-7xl md:w-82.5 sm:w-82.5"
+  >
+    <h1
+      class="md:flex-[1_0_0] lg:flex-[1_0_0] text-white font-inter font-bold text-[32px]"
+    >
       Your goals
     </h1>
     <div id="controls" class="flex items-center gap-4">
-      <app-button
+     <div class="relative inline-block">
+     <app-button
         [icon]="faFilter"
         variant="secondary"
         (onClick)="onOpenFilter()"
       >
         Filters</app-button
       >
+      <app-menu
+        *ngIf="openFilterMenu()"
+        [choices]="filterChoices"
+        (filterChanged)="applyFilter($event)"
+        headerTitle="FILTER BY STATUS"
+      />
+      </div>
+     <div class="relative inline-block">
+
       <app-button variant="secondary" (onClick)="onOpenSortBy()"
         >Sort by</app-button
       >
+        <app-filter-menu-component
+        *ngIf="openSortMenu()"
+    [options]="sortOptions"
+    groupId="sort"
+    headerTitle="SORT BY"
+    (selectionChange)="selectedSort = $event"
+  ></app-filter-menu-component>
+  </div>
     </div>
   </div>
-  <div id="goals" class="flex flex-wrap items-start gap-6 self-stretch">
+  <div
+    id="goals"
+    class="flex flex-wrap items-start gap-6 self-stretch md:w-82.5 sm:w-82.5 xs:w-82.5"
+  >
     @if(goals$ | async; as allGoals){
     <app-goal-card
       *ngFor="let goal of allGoals | goalFilter:activeFilterFn | filterSort: selectedSort:activeFilterFn"
-      [size]="cardState"
+      size="wide"
       [id]="goal.id"
       [title]="goal.name"
       [deadline]="goal.deadline"
@@ -35,13 +60,3 @@
     }
   </div>
 </div>
-<ng-container *ngIf="openFilterMenu()">
-  <app-menu
-    [choices]="filterChoices"
-    (filterChanged)="applyFilter($event)"
-    headerTitle="FILTER BY STATUS"
-  />
-</ng-container>
-<ng-container *ngIf="openSortMenu()">
- <app-filter-menu-component [options]="sortOptions" groupId="sort" headerTitle="SORT BY" (selectionChange)="selectedSort = $event"></app-filter-menu-component>
-</ng-container>

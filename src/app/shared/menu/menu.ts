@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from "@angular/core";
+import { Component, ElementRef, EventEmitter, forwardRef, HostListener, Input, OnInit, Output } from "@angular/core";
 import { FormsModule, NG_VALUE_ACCESSOR } from "@angular/forms";
 
 @Component({
@@ -27,6 +27,7 @@ export class Menu implements OnInit {
   ngOnInit(): void {
     this.onFilterChange('all')
   }
+
   onFilterChange(value:string){
     // this.selectedFilter = value
     const selectedOption = this.choices.find(opt=>opt.value === value);

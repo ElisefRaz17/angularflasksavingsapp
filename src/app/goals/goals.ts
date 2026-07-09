@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from "@angular/core";
+import { Component, ElementRef, HostListener, inject, OnInit, signal } from "@angular/core";
 import { CustomButton } from "../shared/button/button";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
@@ -69,11 +69,22 @@ export class Goals implements OnInit {
   constructor(
     private dataService: DataSharing,
     private router: Router,
+    private elementRef: ElementRef
   ) {}
   goals$!: Observable<any[]>;
   activeFilterFn: (data: any) => boolean = (data) => true;
 
-
+ 
+  @HostListener('document:click', ['$event.target'])
+  onClick(targetElement: any) {
+    const clickedInside = this.elementRef.nativeElement.contains(targetElement);
+    if (!clickedInside && this.openFilterMenu()) {
+      this.openFilterMenu.set(false);
+    }
+    if(!clickedInside && this.openSortMenu()){
+      this.openSortMenu.set(false)
+    }
+  }
 
   onSortChange(sortFn: (a: any, b: any) => number) {
     // Sort mutates the array in-place or returns a copied array

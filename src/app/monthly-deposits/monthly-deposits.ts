@@ -74,10 +74,10 @@ export class MonthlyDeposits implements OnInit {
             title: {
               display: true,
               text: "Month",
-            },
+            }
           },
           y: {
-            beginAtZero: true, // Fixes nothing displaying on Y-axis
+            beginAtZero: true,
             ticks: { display: true },
             title: {
               display: true,
