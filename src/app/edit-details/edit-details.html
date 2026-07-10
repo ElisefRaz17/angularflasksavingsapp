@@ -16,7 +16,7 @@
     </div>
     <div id="goals-section" class="flex items-start gap-12 self-stretch">
         <div class="flex flex-col items-start gap-6">
-        <app-goal-card size="wide" title={{goal.name}} deadline={{goal.deadline}}  goalAmount={{goal.target_amount}} currentAmount={{goal.current_amount}} [state]="goal.current_amount !== 0 ? 'in-progress' : 'no-progress'"></app-goal-card>
+        <app-goal-card size="wide" title={{goal.name}} deadline={{goal.deadline}}  goalAmount={{goal.target_amount}} currentAmount={{goal.current_amount}} [state]="(goal.current_amount / goal.target_amount) * 100 === 100 ? 'complete':(goal.current_amount / goal.target_amount) * 100 !==0?'in-progress':'no-progress'"></app-goal-card>
         <app-add-deposit></app-add-deposit>
         </div>
         <app-deposit-history></app-deposit-history>

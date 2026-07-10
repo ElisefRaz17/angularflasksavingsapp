@@ -66,12 +66,12 @@ export class GoalService {
   }
   deleteGoal(goalId: any): Observable<any> {
     this.loadingSubject.next(true);
-    return this.http
-      .delete<any>(`${this.apiUrl}/${goalId}`, { headers: this.headers })
+    return from(this.getAuthHeaders()).pipe(switchMap(headers=>this.http
+      .delete<any>(`${this.apiUrl}/${goalId}`, { headers})
       .pipe(
         finalize(() => {
           this.loadingSubject.next(false);
         }),
-      );
+      )));
   }
 }

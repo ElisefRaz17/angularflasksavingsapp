@@ -38,7 +38,6 @@ export class AddDeposit implements OnInit{
           this.user_id = response.id;
         }
       })
-      console.log(this.dataService.goalDetails().id)
     }
     get amount(){
       return this.depositForm.get('amount')

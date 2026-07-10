@@ -3,34 +3,61 @@
 >
   <img src="../../assets/login-quote-section.png" class="quote-section" />
 
-  <div class="p-0 flex xl:w-160 sm:w-93.75  flex-col items-start gap-8 shrink-0">
-  <img src="../../assets/logo-large.svg" />
-  <div class="login-title-container">
-    <span class="login-title">Welcome back</span>
-    <span class="login-subheader">Sign in your account</span>
-  </div>
-  <div class="login-input-container">
-    <app-input
-      name="email"
-      [(ngModel)]="email"
-      label="Email address"
-      (ngModelChange)="onEmailChange($event)"
-    ></app-input>
-
-    <app-input
-      name="password"
-      [(ngModel)]="password"
-      label="Password"
-      (ngModelChange)="onPasswordChange($event)"
-    ></app-input>
-
-    <a routerLink="/reset-password" class="forgot-link">Forgot password?</a>
-
-    <app-button (click)="onSubmit()">Sign in</app-button>
-    <div class="sub-links-container">
-      <label class="already-text">Don't have an account?</label
-      ><a routerLink="/register" class="sign-link">Create one</a>
+  <div class="p-0 flex xl:w-160 sm:w-93.75 flex-col items-start gap-8 shrink-0">
+    <img src="../../assets/logo-large.svg" />
+    <div class="login-title-container">
+      <span class="login-title">Welcome back</span>
+      <span class="login-subheader">Sign in your account</span>
     </div>
-  </div>
+    <form
+      [formGroup]="loginForm"
+      id="loginForm"
+      (ngSubmit)="onSubmit()"
+      class="flex flex-col gap-5 self-stretch"
+    >
+      <app-input
+        formControlName="email"
+        label="Email address"
+        placeholder="Email address"
+      ></app-input>
+      @if(email?.invalid && (email?.dirty || email?.touched)){
+      <span class="flex flex-row items-center gap-2">
+        <img src="../../assets/alert-circle.svg" />
+        @if(email?.hasError('required')){
+        <p class="text-red-400 text-sm">Email is required.</p>
+        } @if(email?.hasError('pattern')){
+        <p class="text-red-400 text-sm">Must enter valid email address</p>
+        }
+      </span>
+      }
+      <app-input
+        name="password"
+        formControlName="password"
+        label="Password"
+        placeholder="Password"
+      ></app-input>
+      @if(password?.invalid && (password?.dirty || password?.touched)){
+      <span class="flex flex-row items-center gap-2">
+        <img src="../../assets/alert-circle.svg" />
+        @if(password?.hasError('required')){
+        <p class="text-red-400 text-sm">Password is required.</p>
+        } @if(password?.hasError('min')){
+        <p class="text-red-400 text-sm">Password needs to be at least 8 characters long.</p>
+        }@if(password?.hasError('pattern')){
+        <p class="text-red-400 text-sm">Password must include uppercase, lowercase, numbers, and symbols.</p>
+        }
+      </span>
+      }
+
+      <a routerLink="/reset-password" class="forgot-link">Forgot password?</a>
+
+      <app-button type="submit" form="loginForm" [disabled]="!loginForm.valid"
+        >Sign in</app-button
+      >
+      <div class="sub-links-container">
+        <label class="already-text">Don't have an account?</label
+        ><a routerLink="/register" class="sign-link">Create one</a>
+      </div>
+    </form>
   </div>
 </div>

@@ -1,4 +1,9 @@
-import { Component, inject, ChangeDetectionStrategy } from "@angular/core";
+import {
+  Component,
+  inject,
+  ChangeDetectionStrategy,
+  OnInit,
+} from "@angular/core";
 import { CustomInput } from "../shared/input/input";
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from "../services/auth.service";
@@ -9,45 +14,51 @@ import {
   Validators,
   ReactiveFormsModule,
   FormsModule,
+  FormControl,
 } from "@angular/forms";
 
 @Component({
   selector: "app-login",
   standalone: true,
-  imports: [CustomInput, RouterLink,CustomButton, FormsModule],
+  imports: [CustomInput, RouterLink, CustomButton, FormsModule,ReactiveFormsModule],
   templateUrl: "./login.html",
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   styleUrl: "./login.css",
 })
-export class Login {
+export class Login implements OnInit {
+  loginForm!: FormGroup;
   private authService = inject(AuthService);
-  email = '';
-  password = '';
-  onEmailChange(event: any) {
-    // If event is a string, it assigns correctly. If it is an InputEvent object, it falls back to event.target.value
-    this.email= typeof event === 'string' ? event : event.target?.value;
-  }
-  onPasswordChange(event: any) {
-    // If event is a string, it assigns correctly. If it is an InputEvent object, it falls back to event.target.value
-    this.password= typeof event === 'string' ? event : event.target?.value;
-  }
-  // private fb = inject(FormBuilder);
-  // private emailRegex = '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$';
-
+  private emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+  private passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   constructor(private router: Router) {}
-  // loginForm: FormGroup = this.fb.group({
-  //   email: ["", [Validators.required, Validators.pattern(this.emailRegex)]],
-  //   password: ["", Validators.required],
-  // });
-  
+
+  ngOnInit(): void {
+    this.loginForm = new FormGroup({
+      email: new FormControl(
+        "",
+        [Validators.required, Validators.pattern(this.emailRegex)],
+      ),
+      password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.pattern(this.passwordPattern)]),
+    });
+  }
+  get email() {
+    return this.loginForm.get("email");
+  }
+  get password() {
+    return this.loginForm.get("password");
+  }
+
   async onSubmit() {
-      this.authService.signIn(this.email, this.password).then((response: any) => {
+    this.authService
+      .signIn(this.loginForm.value.email, this.loginForm.value.password)
+      .then((response: any) => {
         if (response.error) {
-          console.error('Authentication Error:', response.error.message);
+          console.error("Authentication Error:", response.error.message);
         } else {
-          this.router.navigate([''])
-          console.log('Login successful', response.data);
+          this.router.navigate([""]);
+          console.log("Login successful", response.data);
         }
-      }).catch((err: any) => console.error('Request failed:', err));
-    }
+      })
+      .catch((err: any) => console.error("Request failed:", err));
+  }
 }
