@@ -38,22 +38,25 @@ import { ToastService } from "../services/toast";
 export class UpdatePassword implements OnInit {
   updatePasswordForm!: FormGroup;
   private authService = inject(AuthService);
-  private toastService = inject(ToastService)
+  private toastService = inject(ToastService);
   private router = inject(Router);
   private passwordPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   constructor(private http: HttpClient) {}
   ngOnInit(): void {
-    this.updatePasswordForm = new FormGroup({
-      password: new FormControl("", [
-        Validators.required,
-        Validators.minLength(8),
-        Validators.pattern(this.passwordPattern),
-      ]),
-      confirmPassword: new FormControl("", [Validators.required]),
-    },{
-      validators: this.passwordMatchValidator
-    });
+    this.updatePasswordForm = new FormGroup(
+      {
+        password: new FormControl("", [
+          Validators.required,
+          Validators.minLength(8),
+          Validators.pattern(this.passwordPattern),
+        ]),
+        confirmPassword: new FormControl("", [Validators.required]),
+      },
+      {
+        validators: this.passwordMatchValidator,
+      },
+    );
   }
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get("password")?.value;
@@ -74,11 +77,15 @@ export class UpdatePassword implements OnInit {
     return this.updatePasswordForm.get("confirmPassword");
   }
   submitNewPassword() {
-    this.authService.updatePassword(this.updatePasswordForm.value.password).then((response) => {
-      this.toastService.show("Password is updated","success")
-      this.router.navigate(["/login"]);
-    }).catch((err)=>
-    this.toastService.show(err,'error')
-    );
+    this.authService
+      .updatePassword(this.updatePasswordForm.value.password)
+      .then((response) => {
+        this.toastService.show("Password is updated", "success");
+        this.router.navigate(["/login"]);
+      })
+      .catch((error) => {
+        console.error("API error", error);
+        this.toastService.show(error, "error");
+      });
   }
 }
