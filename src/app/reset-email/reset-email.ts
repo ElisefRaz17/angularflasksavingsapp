@@ -1,9 +1,10 @@
-import { Component, ChangeDetectionStrategy } from "@angular/core";
+import { Component, ChangeDetectionStrategy, inject } from "@angular/core";
 import { CustomInput } from "../shared/input/input";
 import { CustomButton } from "../shared/button/button";
 import { HttpClient } from "@angular/common/http";
 import { DataSharing } from "../data-sharing";
 import { Route, Router } from "@angular/router";
+import { AuthService } from "../services/auth.service";
 
 @Component({
   selector: "app-reset-email",
@@ -13,6 +14,7 @@ import { Route, Router } from "@angular/router";
   styleUrl: "./reset-email.css",
 })
 export class ResetEmail {
+  private authService = inject(AuthService)
   constructor(
     private http: HttpClient,
     private dataService: DataSharing,
@@ -23,11 +25,16 @@ export class ResetEmail {
   openEmailApp() {
     window.open('https://mail.google.com/','_blank');
   }
-  resendResetLink() {
-    this.http
-      .post("https://flasksavingstracker.onrender.com/api/reset-password", {
-        email: this.email,
-      })
-      .subscribe(() => (this.message = "Check your email for the link!"));
+  onBacktoSignIn(){
+    this.router.navigate(['/login'])
+  }
+    sendEmail(email:string){
+    this.dataService.updateEmail(email);
+  }
+  resendResetLink(){
+        this.sendEmail(this.email());
+    this.authService.sendPasswordReset(this.email()).then(response=>{
+      this.message = 'Check your email for the link!'
+    })
   }
 }

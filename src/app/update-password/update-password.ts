@@ -21,6 +21,7 @@ import { CustomButton } from "../shared/button/button";
 import { ActivatedRoute, Router } from "@angular/router";
 import { CommonModule } from "@angular/common";
 import { AuthService } from "../services/auth.service";
+import { ToastService } from "../services/toast";
 
 @Component({
   selector: "app-update-password",
@@ -37,6 +38,7 @@ import { AuthService } from "../services/auth.service";
 export class UpdatePassword implements OnInit {
   updatePasswordForm!: FormGroup;
   private authService = inject(AuthService);
+  private toastService = inject(ToastService)
   private router = inject(Router);
   private passwordPattern =
     /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -73,8 +75,10 @@ export class UpdatePassword implements OnInit {
   }
   submitNewPassword() {
     this.authService.updatePassword(this.updatePasswordForm.value.password).then((response) => {
-      alert("Password updated");
+      this.toastService.show("Password is updated","success")
       this.router.navigate(["/login"]);
-    });
+    }).catch((err)=>
+    this.toastService.show(err,'error')
+    );
   }
 }
