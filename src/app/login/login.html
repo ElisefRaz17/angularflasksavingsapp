@@ -32,6 +32,7 @@
       }
       <app-input
         name="password"
+        type="password"
         formControlName="password"
         label="Password"
         placeholder="Password"
@@ -41,10 +42,6 @@
         <img src="../../assets/alert-circle.svg" />
         @if(password?.hasError('required')){
         <p class="text-red-400 text-sm">Password is required.</p>
-        } @if(password?.hasError('min')){
-        <p class="text-red-400 text-sm">Password needs to be at least 8 characters long.</p>
-        }@if(password?.hasError('pattern')){
-        <p class="text-red-400 text-sm">Password must include uppercase, lowercase, numbers, and symbols.</p>
         }
       </span>
       }

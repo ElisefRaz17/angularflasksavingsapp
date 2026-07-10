@@ -6,10 +6,13 @@ import {
   inject,
 } from "@angular/core";
 import {
+  AbstractControl,
   FormBuilder,
+  FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
   Validators,
 } from "@angular/forms";
 import { passwordMatchValidator } from "../utils/passwordValidator";
@@ -31,18 +34,45 @@ import { AuthService } from "../services/auth.service";
   templateUrl: "./update-password.html",
   styleUrl: "./update-password.css",
 })
-export class UpdatePassword {
+export class UpdatePassword implements OnInit {
+  updatePasswordForm!: FormGroup;
   private authService = inject(AuthService);
   private router = inject(Router);
-  password = "";
-  confirmPassword = "";
+  private passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   constructor(private http: HttpClient) {}
-  isValid() {
-    return this.password.length >= 8 && this.password === this.confirmPassword;
+  ngOnInit(): void {
+    this.updatePasswordForm = new FormGroup({
+      password: new FormControl("", [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(this.passwordPattern),
+      ]),
+      confirmPassword: new FormControl("", [Validators.required]),
+    },{
+      validators: this.passwordMatchValidator
+    });
   }
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get("password")?.value;
+    const confirmPassword = control.get("confirmPassword")?.value;
 
+    if (password && confirmPassword && password !== confirmPassword) {
+      // Set the mismatch error on the confirmPassword control specifically
+      control.get("confirmPassword")?.setErrors({ passwordMismatch: true });
+      return { passwordMismatch: true };
+    }
+
+    return null;
+  }
+  get password() {
+    return this.updatePasswordForm.get("password");
+  }
+  get confirmPassword() {
+    return this.updatePasswordForm.get("confirmPassword");
+  }
   submitNewPassword() {
-    this.authService.updatePassword(this.password).then((response) => {
+    this.authService.updatePassword(this.updatePasswordForm.value.password).then((response) => {
       alert("Password updated");
       this.router.navigate(["/login"]);
     });

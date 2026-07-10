@@ -11,17 +11,33 @@ import { CustomButton } from "../shared/button/button";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { map } from "rxjs/operators";
 import { Router, RouterLink } from "@angular/router";
-import { FormsModule } from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from "@angular/forms";
 
 @Component({
   selector: "app-register",
   standalone: true,
-  imports: [CustomInput, CustomButton, RouterLink, FormsModule],
+  imports: [
+    CustomInput,
+    CustomButton,
+    RouterLink,
+    FormsModule,
+    ReactiveFormsModule,
+  ],
   templateUrl: "./register.html",
   styleUrl: "./register.css",
 })
 export class Register implements OnInit {
+  registerForm!: FormGroup;
   private userService = inject(UserService);
+  private emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
+  private passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   isMobile$ = this.breakpointObserver
     .observe([Breakpoints.Handset])
     .pipe(map((result) => result.matches));
@@ -29,32 +45,40 @@ export class Register implements OnInit {
     private breakpointObserver: BreakpointObserver,
     private router: Router,
   ) {}
-  email = "";
-  full_name = "";
-  password = "";
   users: User[] = [];
 
   ngOnInit(): void {
-    // this.loadUsers();
+    this.registerForm = new FormGroup({
+      email: new FormControl("", [Validators.required, Validators.pattern(this.emailRegex)]),
+      full_name: new FormControl("", [Validators.required]),
+      password: new FormControl("", [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern(this.passwordPattern)
+      ]),
+    });
+  }
+  get password() {
+    return this.registerForm.get("password");
+  }
+  get full_name() {
+    return this.registerForm.get("full_name");
+  }
+  get email() {
+    return this.registerForm.get("email");
   }
 
-  // loadUsers(): void {
-  //   this.userService.getUsers().subscribe((data) => (this.users = data));
-  // }
-
- addUser() {
-          // this.router.navigate(['/login'])
-
+  addUser() {
     this.userService
       .createUser({
-        email: this.email,
-        password: this.password,
-        full_name: this.full_name,
-      }).subscribe((response)=>{
-        if(response){
-          console.log('Response',response)
-          this.router.navigate(['/login'])
-        }
+        email: this.registerForm.value.email,
+        password: this.registerForm.value.password,
+        full_name: this.registerForm.value.full_name,
       })
+      .subscribe((response) => {
+        if (response) {
+          this.router.navigate(["/login"]);
+        }
+      });
   }
 }

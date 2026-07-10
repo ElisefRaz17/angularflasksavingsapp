@@ -1,32 +1,67 @@
-<div 
+<div
   class="flex pt-0 px-4 xl:p-10 xl:gap-20 sm:h-203 xs:h-203 gap-8 self-stretch justify-center items-center"
-
 >
-  <img src="../../assets/Quote Section.png" class="quote-section"/>
+  <img src="../../assets/Quote Section.png" class="quote-section" />
 
-  <div class="p-0 flex xl:w-160 sm:w-93.75  flex-col items-start gap-8 shrink-0">
+  <div class="p-0 flex xl:w-160 sm:w-93.75 flex-col items-start gap-8 shrink-0">
     <img src="../../assets/logo-large.svg" />
     <div class="register-title-container">
       <span class="register-title">Create your account</span>
       <span class="register-subheader">Start tracking your savings goals</span>
     </div>
-    <div class="register-input-container">
+    <form
+      [formGroup]="registerForm"
+      id="updatePasswordForm"
+      (ngSubmit)="addUser();"
+      class="flex flex-col gap-5 self-stretch"
+    >
+      <app-input formControlName="full_name" label="Full name"></app-input>
+      @if(full_name && full_name.invalid && (full_name.dirty || full_name.touched)){
+      <span class="flex flex-row items-center gap-2">
+        <img src="../../assets/alert-circle.svg" />
+        @if(full_name.hasError('required')){
+        <p class="text-red-400 text-sm">Name is required.</p>
+        }
+      </span>
+      }
+      <app-input formControlName="email" label="Email address"></app-input>
+      @if(email && email.invalid && (email.dirty || email.touched)){
+      <span class="flex flex-row items-center gap-2">
+        <img src="../../assets/alert-circle.svg" />
+        @if(email.hasError('required')){
+        <p class="text-red-400 text-sm">Email is required.</p>
+        } @if(email.hasError('pattern')){
+        <p class="text-red-400 text-sm">Must enter valid email address</p>
+        }
+      </span>
+      }
       <app-input
-        [(ngModel)]="full_name"
-        label="Full name"
+        formControlName="password"
+        label="Password"
       ></app-input>
+      @if(password && password.invalid && (password.dirty || password.touched)){
+      <span class="flex flex-row items-center gap-2">
+        <img src="../../assets/alert-circle.svg" />
+        @if(password.hasError('required')){
+        <p class="text-red-400 text-sm">Password is required.</p>
+        } @if(password.hasError('minLength')){
+        <p class="text-red-400 text-sm">
+          Password needs to be at least 8 characters long.
+        </p>
+        }
+        @if(password.hasError('pattern')){
+        <p class="text-red-400 text-sm">
+          Password needs to be at least 8 characters long.
+        </p>
+        }
+      </span>
+      }
 
-      <app-input
-        [(ngModel)]="email"
-        label="Email address"
-      ></app-input>
-      <app-input [(ngModel)]="password" label="Password"></app-input>
-      <app-button (click)="addUser();">Create account</app-button>
+      <app-button type="submit" form="registerForm" [disabled]="!registerForm.valid">Create account</app-button>
       <div class="sub-links-container">
         <label class="already-text">Already have an account?</label
         ><a routerLink="/login" class="sign-link">Sign in</a>
       </div>
-      <!-- <button (click)="addUser()">Add User</button> -->
-    </div>
+    </form>
   </div>
 </div>

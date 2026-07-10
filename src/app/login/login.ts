@@ -29,7 +29,6 @@ export class Login implements OnInit {
   loginForm!: FormGroup;
   private authService = inject(AuthService);
   private emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
-  private passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
   constructor(private router: Router) {}
 
   ngOnInit(): void {
@@ -38,7 +37,7 @@ export class Login implements OnInit {
         "",
         [Validators.required, Validators.pattern(this.emailRegex)],
       ),
-      password: new FormControl("", [Validators.required, Validators.minLength(8), Validators.pattern(this.passwordPattern)]),
+      password: new FormControl("", [Validators.required]),
     });
   }
   get email() {
