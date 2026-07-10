@@ -1,30 +1,41 @@
-import { Component, inject, OnInit } from "@angular/core";
+import { Component, ElementRef, inject, OnInit, ViewChild } from "@angular/core";
 import { Deposit } from "../services/deposit";
 import {
   Chart,
   registerables,
 } from "chart.js";
+import { CsvExportService } from "../csv-export-service";
+import { CustomButton } from "../shared/button/button";
 
 
 Chart.register(...registerables);
 @Component({
   selector: "app-monthly-deposits",
   standalone: true,
-  imports: [],
+  imports: [CustomButton],
   templateUrl: "./monthly-deposits.html",
   styleUrl: "./monthly-deposits.css",
 })
 export class MonthlyDeposits implements OnInit {
+  @ViewChild('reportContent',{static:false}) reportContent!:ElementRef;
   chart: any;
   apiData: any[] = [];
+  csvArray:any[] =[]
 
   private depositService = inject(Deposit);
 
+  constructor(private csvService: CsvExportService){}
   ngOnInit(): void {
     this.depositService.getDeposits().subscribe((data) => {
       this.apiData = data;
       this.renderChart();
     });
+    
+  }
+  downloadCsv():void{
+    const headers = ["date","amount"];
+    console.log('CSV Data', this.csvArray)
+    this.csvService.exportToCsv('monthly_deposits_report',this.csvArray,headers)
   }
   renderChart() {
     const monthlyData = this.apiData.reduce((acc:{[key:string]:number},curr)=>{
@@ -35,14 +46,12 @@ export class MonthlyDeposits implements OnInit {
     },{})
     const labels = Object.keys(monthlyData);
     const dataPoints = Object.values(monthlyData);
-    const axisLabels = this.apiData.map((item) => [
-      new Date(item.created_at).toLocaleString("default", {
-        month: "long",
-        year: "numeric",
-      }),
-      item.amount,
-    ]);
-    const amounts = this.apiData.map((item) => item.amount);
+    this.csvArray = labels.map((key,index)=>{
+      return{
+        date:key,
+        amount:dataPoints[index]
+      }
+    })
 
     // 2. Destroy existing chart before recreating
     if (this.chart) {

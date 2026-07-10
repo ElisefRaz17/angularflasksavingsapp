@@ -16,6 +16,9 @@
     width: 100%;
     color: white;
 }
+.btn:focus{
+    box-shadow: 0 0 0 2px var(--colors-neutral-900, #101010), 0 0 0 4px var(--colors-orange-400, #FF5722);
+}
 .btn-icon{
     font-size: 24px;
     width: 20px;

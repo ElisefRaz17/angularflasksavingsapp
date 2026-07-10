@@ -1,11 +1,41 @@
-<div class="flex p-6 flex-col items-start gap-6 self-strecth rounded-2xl border border-neutral-600 bg-neutral-800 w-209.25">
-    <span class="text-white text-xl font-semibold">Add deposit</span>
-    <form [formGroup]="depositForm" id="depositForm" (ngSubmit)="onSubmit()"class="flex flex-col gap-5 self-stretch">
-        <app-input label="Amount" formControlName="amount" placeholder="0.00" ></app-input>
-        <app-input label="Note(optional)" formControlName="note" placeholder="e.g. Monthly savings"></app-input>
-      <div class="flex justify-between">
-        <app-button type="submit" form="depositForm" [disabled]="!depositForm.valid">Add funds</app-button>
-        </div>
-    </form>
+<div
+  class="flex p-6 flex-col items-start gap-6 self-strecth rounded-2xl border border-neutral-600 bg-neutral-800 w-209.25"
+>
+  <span class="text-white text-xl font-semibold">Add deposit</span>
+  <form
+    [formGroup]="depositForm"
+    id="depositForm"
+    (ngSubmit)="onSubmit()"
+    class="flex flex-col gap-5 self-stretch"
+  >
+    <app-input
+      label="Amount"
+      formControlName="amount"
+      placeholder="0.00"
+    ></app-input>
+    @if(amount?.invalid && (amount?.dirty || amount?.touched)){
+        <span class="flex flex-row items-center gap-2">
+            <img src="../../assets/alert-circle.svg"/>
+            @if(amount?.hasError('required')){
+                <p class="text-red-400 text-sm">Amount is required.</p>
+            }
+            @if(amount?.hasError('min')){
+                <p class="text-red-400 text-sm">Amount must be greater than 0.</p>
+            }
+        </span>
+    }
+    <app-input
+      label="Note(optional)"
+      formControlName="note"
+      placeholder="e.g. Monthly savings"
+    ></app-input>
+    <div class="flex justify-between">
+      <app-button
+        type="submit"
+        form="depositForm"
+        [disabled]="!depositForm.valid"
+        >Add funds</app-button
+      >
+    </div>
+  </form>
 </div>
-

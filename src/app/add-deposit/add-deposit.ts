@@ -29,7 +29,7 @@ export class AddDeposit implements OnInit{
     constructor(private router:Router){}
     ngOnInit(): void {
       this.depositForm = new FormGroup({
-        amount:new FormControl("",[Validators.required]),
+        amount:new FormControl("",[Validators.required,Validators.min(1)]),
           note: new FormControl("")
         
       });
@@ -39,6 +39,9 @@ export class AddDeposit implements OnInit{
         }
       })
       console.log(this.dataService.goalDetails().id)
+    }
+    get amount(){
+      return this.depositForm.get('amount')
     }
 
     onSubmit(){

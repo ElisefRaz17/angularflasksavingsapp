@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import {
   createClient,
   SupabaseClient,
@@ -6,6 +6,7 @@ import {
 } from "@supabase/supabase-js";
 import { environment } from "../../environments/environment";
 import { BehaviorSubject, from, map, Observable } from "rxjs";
+import { Router } from "@angular/router";
 
 @Injectable({
   providedIn: "root",
@@ -13,7 +14,7 @@ import { BehaviorSubject, from, map, Observable } from "rxjs";
 export class AuthService {
   private supabase: SupabaseClient;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-
+  private router = inject(Router)
   constructor() {
     // Replace with your actual Supabase URL and Anon Key
     this.supabase = createClient(
@@ -43,14 +44,25 @@ export class AuthService {
     return await this.supabase.auth.signInWithPassword({ email:emailValue, password:passwordValue });
   }
 
-  async signOut() {
-    return await this.supabase.auth.signOut();
+  async signOut():Promise<void> {
+    try{
+      const {error} = await this.supabase.auth.signOut();
+      if(error) throw error;
+    }catch(error){
+      console.error('Error during Supabase sign out:',error);
+      localStorage.clear()
+    }finally{
+      await this.router.navigate(['/login'])
+    }
+    
   }
 
   // Forgot Password: Sends a reset link to the user's email
   async sendPasswordReset(email: string) {
     return await this.supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: "https://angularsavingstracker-5329kw2kp-elises-projects-7f81aa22.vercel.app/update-password",
+      // redirectTo: "http://localhost:4200/update-password",
+      redirectTo:"https://angularsavingstracker.vercel.app/update-password"
+
     });
   }
 

@@ -8,43 +8,47 @@
       Your goals
     </h1>
     <div id="controls" class="flex items-center gap-4">
-     <div class="relative inline-block">
-     <app-button
-        [icon]="faFilter"
-        variant="secondary"
-        (onClick)="onOpenFilter()"
-      >
-        Filters</app-button
-      >
-      <app-menu
-        *ngIf="openFilterMenu()"
-        [choices]="filterChoices"
-        (filterChanged)="applyFilter($event)"
-        headerTitle="FILTER BY STATUS"
-      />
+      <div class="relative inline-block">
+        <app-button
+          [icon]="faFilter"
+          variant="secondary"
+          [disabled]="(goals$ | async)?.length === 0"
+          (onClick)="onOpenFilter()"
+        >
+          Filters</app-button
+        >
+        <app-menu
+          *ngIf="openFilterMenu()"
+          [choices]="filterChoices"
+          (filterChanged)="applyFilter($event)"
+          headerTitle="FILTER BY STATUS"
+        />
       </div>
-     <div class="relative inline-block">
+      <div class="relative inline-block">
+        <app-button variant="secondary" (onClick)="onOpenSortBy()"
+          [disabled]="(goals$ | async)?.length === 0"
 
-      <app-button variant="secondary" (onClick)="onOpenSortBy()"
-        >Sort by</app-button
-      >
+          >Sort by</app-button
+        >
         <app-filter-menu-component
-        *ngIf="openSortMenu()"
-    [options]="sortOptions"
-    groupId="sort"
-    headerTitle="SORT BY"
-    (selectionChange)="selectedSort = $event"
-  ></app-filter-menu-component>
-  </div>
+          *ngIf="openSortMenu()"
+          [options]="sortOptions"
+          groupId="sort"
+          headerTitle="SORT BY"
+          (selectionChange)="selectedSort = $event"
+        ></app-filter-menu-component>
+      </div>
     </div>
   </div>
   <div
     id="goals"
-    class="flex flex-wrap items-start gap-6 self-stretch md:w-82.5 sm:w-82.5 xs:w-82.5"
+    class="flex flex-wrap items-start gap-6 self-stretch md:w-[720px] sm:w-[311px] xs:w-[311px] xl:w-full"
   >
+  @if((goals$ | async) !== null){
     @if(goals$ | async; as allGoals){
+      @if(allGoals.length > 0){
+        @for(goal of allGoals | goalFilter:activeFilterFn | filterSort: selectedSort:activeFilterFn; track goal.id){
     <app-goal-card
-      *ngFor="let goal of allGoals | goalFilter:activeFilterFn | filterSort: selectedSort:activeFilterFn"
       size="wide"
       [id]="goal.id"
       [title]="goal.name"
@@ -54,9 +58,34 @@
       [currentAmount]="goal.current_amount"
       [state]="(goal.current_amount / goal.target_amount) * 100 === 100 ? 'complete':(goal.current_amount / goal.target_amount) * 100 !==0?'in-progress':'no-progress'"
     ></app-goal-card>
-
-    }@else {
-    <p class="text-orange-400 text-4xl">Loading data...</p>
-    }
+        }
+      } @else{
+            <div
+      class="flex xl:w-[1280px] py-[40px] gap-[32px] items-center flex-col rounded-[16px] border border-dashed border-neutral-600"
+    >
+      <div class="flex flex-col items-center gap-[20px]">
+        <img src="../../assets/icon-no-goals.svg" />
+        <span class="text-neutral-0 text-[32px] font-bold text-center"
+          >No goals yet</span
+        >
+        <p
+          class="xl:w-[512px] text-center text-neutral-300 text-[16px] font-semibold"
+        >
+          Start saving for something that matters. Create your first goal and
+          track your progress.
+        </p>
+      </div>
+      <div>
+      <app-button [icon]="faPlus" (onClick)="onOpenCreateGoalModal()">Create your first goal</app-button>
+      </div>
+    </div>
+      }
+    }@else {<p class="text-orange-400 text-[16px] font-bold">Loading data...</p>}
+  }
   </div>
 </div>
+<ng-container *ngIf="openCreateGoal">
+  <app-goal-modal
+  (close)="openCreateGoal =false;"
+  ></app-goal-modal>
+</ng-container>

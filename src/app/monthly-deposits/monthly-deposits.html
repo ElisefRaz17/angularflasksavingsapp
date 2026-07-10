@@ -1,4 +1,7 @@
 <div class="rounded-2xl bg-neutral-800 border bored-neutral-600 flex p-5 flex-col items-start gap-5 self-stretch max-h-50 relative w-full md:w-180 xs:w-211.5 lg:w-170 xl:w-7xl">
+  <div class="flex justify-between w-full">
   <span class="self-stretch font-inter text-xl font-[600px] text-white">Monthly deposits</span>
+  <app-button (onClick)="downloadCsv()">Export CSV</app-button>
+  </div>
   <canvas id="canvas" class="md:w-180 xs:w-211.5 lg:w-170">{{ chart }}</canvas>
 </div>

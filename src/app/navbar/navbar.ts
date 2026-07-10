@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 })
 export class Navbar {
   faPerson = faCircleUser;
+private authService = inject(AuthService)
   @Output() closeDialog = new EventEmitter<void>();
   @ViewChild(GoalModal) modal!:GoalModal;
   openMenu = signal(false);
@@ -41,9 +42,8 @@ export class Navbar {
     // 2. Your logic to set your boolean variable to true
     this.openModalEvent.emit();
   }
-  handleSignOut(){
-    localStorage.clear();
-    this.router.navigate(['/login'])
+  handleSignOut():void{
+    this.authService.signOut()
 
   }
  closeGoalModal(){

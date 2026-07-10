@@ -37,7 +37,7 @@
             }
           },
           "options": {
-            "assets": ["src/favicon.ico","src/assets"],
+            "assets": ["src/logo-small.svg","src/assets"],
             "index": "src/index.html",
             "browser": "src/main.ts",
             "outputPath": "dist/demo",

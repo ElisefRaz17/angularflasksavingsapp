@@ -57,16 +57,6 @@ export class GoalModal implements OnInit {
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<Goal>();
 
-  // constructor(){
-  //   effect(()=>{
-  //     const goal = this.dataService.goalDetails();
-  //     if(this.goalForm && goal){
-  //       this.goalForm.patchValue(goal)
-  //     }else if(this.goalForm){
-  //       this.goalForm.reset()
-  //     }
-  //   })
-  // }
   ngOnInit(): void {
     this.goalId = this.dataService.goalDetails()?.id
 

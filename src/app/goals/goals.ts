@@ -2,6 +2,7 @@ import { Component, ElementRef, HostListener, inject, OnInit, signal } from "@an
 import { CustomButton } from "../shared/button/button";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { GoalCard } from "../goal-card/goal-card";
 import { GoalService } from "../services/goal.service";
 import { AsyncPipe, CommonModule, NgIf } from "@angular/common";
@@ -12,6 +13,8 @@ import { Menu } from "../shared/menu/menu";
 import { GoalFilterPipe } from "../goal-filter-pipe";
 import { FilterMenuComponent } from "../filter-menu-component/filter-menu-component";
 import {FilterSortPipe } from "../filter-sort-pipe";
+import { AuthService } from "../services/auth.service";
+import { GoalModal } from "../goal-modal/goal-modal";
 
 @Component({
   selector: "app-goals",
@@ -25,13 +28,18 @@ import {FilterSortPipe } from "../filter-sort-pipe";
     NgIf,
     CommonModule,
     FilterMenuComponent,
-    FilterSortPipe
+    FilterSortPipe,
+    GoalModal
 ],
   templateUrl: "./goals.html",
   styleUrl: "./goals.css",
 })
 export class Goals implements OnInit {
   faFilter = faFilter;
+  isLoading = false;
+  faPlus = faPlus;
+  user_id = "";
+  openCreateGoal = false;
   openFilterMenu = signal(false);
   openSortMenu = signal(false);
   selectedSort:string = 'recently_added'
@@ -68,6 +76,7 @@ export class Goals implements OnInit {
 
   constructor(
     private dataService: DataSharing,
+    private authService: AuthService,
     private router: Router,
     private elementRef: ElementRef
   ) {}
@@ -95,6 +104,9 @@ export class Goals implements OnInit {
   onOpenFilter() {
     this.openFilterMenu.update((state) => !state);
   }
+  onOpenCreateGoalModal(){
+    this.openCreateGoal = true;
+  }
   onOpenSortBy() {
     this.openSortMenu.update((state) => !state);
   }
@@ -110,6 +122,11 @@ export class Goals implements OnInit {
     return Math.round((current / target) * 100);
   }
   ngOnInit(): void {
+    this.authService.getCurrentUser().then((response) => {
+      if (response) {
+        this.user_id = response.id;
+      }
+    });
     this.goals$ = this.goalService.getGoals();
     this.setRandomState();
   }

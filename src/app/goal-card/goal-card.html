@@ -1,48 +1,68 @@
-<div class="rounded-xl border shadow-sm transition-all duration-200" [ngClass]="[sizeClasses().card, stateClasses().bg]">
+<div
+  class="rounded-xl border shadow-sm transition-all duration-200"
+  [ngClass]="[sizeClasses().card, stateClasses().bg]"
+>
   <!-- Header Text -->
   <!-- <div class="flex justify-between items-start mb-3"> -->
-    <div class="flex justify-center items-start gap-2.5 self-stretch">
-    <h3 class="font-semibold text-neutral-0 text-[20px] flex-[1_0_0]" [ngClass]="sizeClasses().title">
+  <div class="flex justify-center items-start gap-2.5 self-stretch">
+    <h3
+      class="font-semibold text-neutral-0 text-[20px] flex-[1_0_0]"
+      [ngClass]="sizeClasses().title"
+    >
       {{ title }}
     </h3>
-    <span class="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 capitalize">
+    <span
+      class="text-xs font-medium px-2 py-0.5 rounded-full bg-slate-100 text-slate-600 capitalize"
+    >
       {{ state }}
     </span>
   </div>
 
   <!-- Progress Percentage Subtext -->
-   <div class="flex flex-col justify-end items-start gap-4 flex-[1_0_0] self-stretch">
-  <div class="flex justify-start mt-1.5">
-    <span class="text-[64px] font-semibold" [ngClass]="stateClasses().text">
-      {{ progressPercentage() | number:'1.0-0' }}%
-    </span>
-  </div>
+  <div
+    class="flex flex-col justify-end items-start gap-4 flex-[1_0_0] self-stretch"
+  >
+    <div class="flex justify-start mt-1.5">
+      <span class="text-[64px] font-semibold" [ngClass]="stateClasses().text">
+        {{ progressPercentage() | number:'1.0-0' }}%
+      </span>
+    </div>
 
-  <!-- Progress Bar Container -->
-  <div class="w-full bg-neutral-700 rounded-full overflow-hidden" [ngClass]="sizeClasses().progressTrack">
-    <!-- Active Progress Bar Fill -->
-    <div 
-      class="h-full rounded-full transition-all duration-500 ease-out"
-      [ngClass]="stateClasses().bar"
-      [style.width.%]="progressPercentage()">
+    <!-- Progress Bar Container -->
+    <div
+      class="w-full bg-neutral-700 rounded-full overflow-hidden"
+      [ngClass]="sizeClasses().progressTrack"
+    >
+      <!-- Active Progress Bar Fill -->
+      <div
+        class="h-full rounded-full transition-all duration-500 ease-out"
+        [ngClass]="stateClasses().bar"
+        [style.width.%]="progressPercentage()"
+      ></div>
     </div>
   </div>
-  </div>
 
-    <!-- Money Values -->
-  <div class="flex items-baseline gap-1 mb-4 mt-4">
+  <!-- Money Values -->
+  <div class="flex items-center gap-1 mb-4 mt-4">
     <span class="text-sm text-neutral-0" [ngClass]="sizeClasses().amount">
       {{ currentAmount | currency:'USD':'symbol':'1.0-0' }}
     </span>
     <span class="text-sm text-neutral-0">
       of {{ goalAmount | currency:'USD':'symbol':'1.0-0' }}
     </span>
-        <svg xmlns="http://www.w3.org/2000/svg" width="4" height="4" viewBox="0 0 4 4" fill="none">
-      <circle cx="2" cy="2" r="2" fill="white" fill-opacity="0.3"/>
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="4"
+      height="4"
+      viewBox="0 0 4 4"
+      fill="none"
+    >
+      <circle cx="2" cy="2" r="2" fill="white" fill-opacity="0.3" />
     </svg>
-    @if(deadline !== null){<span class="text-white text-sm font-medium">Due {{deadline}}</span>}
-    @else{
-      <span>No Due Date</span>
+    @if(deadline !== null){<span class="text-white text-sm font-medium"
+      >Due {{deadline}}</span
+    >} @else{
+    <span class="text-neutral-400">No Due Date</span>
     }
   </div>
 </div>

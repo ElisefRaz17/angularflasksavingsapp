@@ -72,10 +72,4 @@ export class CustomInput implements ControlValueAccessor {
   setDisabledState?(isDisabled: boolean): void {
     this.disabled = isDisabled;
   }
-  // @Output() valueChange = new EventEmitter<string>();
-
-  // onInputChange(event: Event) {
-  //   const value = (event.target as HTMLInputElement).value;
-  //   this.valueChange.emit(value);
-  // }
 }

@@ -3,7 +3,7 @@
     <div class="modal-header">
       <h2>{{ isEdit ? 'Edit Goal' : 'Create Goal' }}</h2>
       <svg
-        class="close-icon"
+        class="close-btn"
         (click)="onClose()"
         xmlns="http://www.w3.org/2000/svg"
         width="20"
@@ -72,8 +72,6 @@
                 <app-button (onClick)="onSubmit()" form="goalForm"[disabled]="!goalForm.valid"
           >{{isEdit ? 'Save Goal':'Create Goal'}}</app-button
         >
-        <!-- <button type="submit" form="goalForm">Submit Goal</button> -->
-
       </div>
     </form>
   </dialog>
