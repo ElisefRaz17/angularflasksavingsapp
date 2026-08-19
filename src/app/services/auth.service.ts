@@ -1,35 +1,41 @@
 import { inject, Injectable } from "@angular/core";
-import {
-  createClient,
-  SupabaseClient,
-  User,
-} from "@supabase/supabase-js";
+import { createClient, Session, SupabaseClient, User } from "@supabase/supabase-js";
 import { environment } from "../../environments/environment";
-import { BehaviorSubject, from, map, Observable } from "rxjs";
+import { BehaviorSubject, firstValueFrom, from, map, Observable } from "rxjs";
 import { Router } from "@angular/router";
+import { HttpClient } from "@angular/common/http";
+import { InMemoryStorage } from "../utils/memory-storage";
 
 @Injectable({
   providedIn: "root",
 })
 export class AuthService {
+  private apiUrl = "https://flasksavingstracker.onrender.com/api";
   private supabase: SupabaseClient;
   private currentUserSubject = new BehaviorSubject<User | null>(null);
-  private router = inject(Router)
-  constructor() {
+  private router = inject(Router);
+  constructor(private http: HttpClient) {
     // Replace with your actual Supabase URL and Anon Key
     this.supabase = createClient(
       environment.supabaseUrl,
-      environment.supabaseKey
+      environment.supabaseKey,
+      {
+        auth: {
+          storage: new InMemoryStorage(),
+          persistSession: false,
+          autoRefreshToken:false,
+          detectSessionInUrl:false
+        },
+      },
     );
-
   }
 
   isAuthenticated(): Observable<boolean> {
     return from(this.supabase.auth.getSession()).pipe(
       map((response) => {
         // Returns true if an active, unexpired session is found in localStorage
-        return !!response.data.session; 
-      })
+        return !!response.data.session;
+      }),
     );
   }
   get user$(): Observable<User | null> {
@@ -41,28 +47,75 @@ export class AuthService {
   }
 
   async signIn(emailValue: string, passwordValue: string) {
-    return await this.supabase.auth.signInWithPassword({ email:emailValue, password:passwordValue });
-  }
+    const {data,error} = await this.supabase.auth.signInWithPassword({
+      email: emailValue,
+      password: passwordValue,
+    });
+    if (error) throw error;
 
-  async signOut():Promise<void> {
-    try{
-      const {error} = await this.supabase.auth.signOut();
-      if(error) throw error;
-    }catch(error){
-      console.error('Error during Supabase sign out:',error);
-      localStorage.clear()
-    }finally{
-      await this.router.navigate(['/login'])
+    // 2. Send token securely to Flask backend via custom handler
+    const payload = {
+      access_token: data.session?.access_token,
+      refresh_token: data.session?.refresh_token,
+    };
+
+    // Correct: Do NOT call .json() on the result of HttpClient
+    const response = await firstValueFrom(
+      this.http.post<any>(`${this.apiUrl}/login-handler`, payload, { withCredentials: true })
+    );
+
+    return response; // response is already a JavaScript object
+  }
+  get client(){return this.supabase;}
+    // Custom handler to restore session on app refresh via Flask backend verification
+  async restoreSessionOnRefresh(): Promise<Session | null> {
+    try {
+      const response = await firstValueFrom(
+        this.http.get<{ access_token: string; refresh_token: string }>(
+          `${this.apiUrl}/refresh-session`,
+          { withCredentials: true } // Sends secure HttpOnly cookie managed by Flask
+        )
+      );
+
+      if (response?.access_token) {
+        const { data, error } = await this.supabase.auth.setSession({
+          access_token: response.access_token,
+          refresh_token: response.refresh_token,
+        });
+        if (!error) return data.session;
+      }
+    } catch (err) {
+      console.error('Session restore failed or expired', err);
     }
-    
+    return null;
+  }
+ 
+  
+
+  async signOut(): Promise<void> {
+    try {
+      const { error } = await this.supabase.auth.signOut();
+      if (error) throw error;
+    } catch (error) {
+      console.error("Error during Supabase sign out:", error);
+      localStorage.clear();
+    } finally {
+      try {
+        await firstValueFrom(
+          this.http.post<any>(`${this.apiUrl}/logout`, {}, { withCredentials: true })
+        );
+      } catch (error) {
+        console.error("Error clearing backend session cookie:", error);
+      }
+      await this.router.navigate(["/login"]);
+    }
   }
 
   // Forgot Password: Sends a reset link to the user's email
   async sendPasswordReset(email: string) {
     return await this.supabase.auth.resetPasswordForEmail(email, {
       // redirectTo: "http://localhost:4200/update-password",
-      redirectTo:"https://angularsavingstracker.vercel.app/update-password"
-
+      redirectTo: "https://angularsavingstracker.vercel.app/update-password",
     });
   }
 
