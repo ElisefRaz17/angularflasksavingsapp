@@ -1,54 +1,27 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { BehaviorSubject, finalize, from, Observable, switchMap } from "rxjs";
+import { BehaviorSubject, finalize, Observable, Subject, tap } from "rxjs";
 import { Goal } from "../models/goal.model";
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
-import { environment } from "../../environments/environment";
 
 @Injectable({
   providedIn: "root",
 })
 export class GoalService {
   private apiUrl = "https://flasksavingstracker.onrender.com/api/goals";
-  private token = "";
-  private refresh_token = "";
-  private headers!: HttpHeaders;
   private loadingSubject = new BehaviorSubject<boolean>(false);
   private loading$ = this.loadingSubject.asObservable();
-  private supabase: SupabaseClient;
-  constructor(private http: HttpClient) {
-    const accessToken = localStorage.getItem(
-      "sb-pgamtmhyimytcousdhtm-auth-token",
-    );
-    if (accessToken) {
-      this.token = JSON.parse(accessToken).access_token;
-    }
-    this.headers = new HttpHeaders({
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${this.token}`,
-    });
-    this.supabase = createClient(
-      environment.supabaseUrl,
-      environment.supabaseKey,
-    );
-  }
-  async getAuthHeaders() {
-    const { data } = await this.supabase.auth.getSession();
-    const token = data.session?.access_token;
-
-    return new HttpHeaders({
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    });
-  }
+  private goalsChangedSubject = new Subject<void>();
+  readonly goalsChanged$ = this.goalsChangedSubject.asObservable();
+  constructor(private http: HttpClient) {}
   getGoals(){
-    return from(this.getAuthHeaders()).pipe(switchMap(headers=>this.http.get<any[]>(this.apiUrl, { headers })));
+    return this.http.get<any[]>(this.apiUrl);
   }
   updateGoal(goalId: any, goal: any): Observable<any> {
     this.loadingSubject.next(true);
     return this.http
-      .put(`${this.apiUrl}/${goalId}`, goal, { headers: this.headers })
+      .put(`${this.apiUrl}/${goalId}`, goal)
       .pipe(
+        tap(() => this.goalsChangedSubject.next()),
         finalize(() => {
           this.loadingSubject.next(false);
         }),
@@ -56,22 +29,24 @@ export class GoalService {
   }
   createGoal(goal: Goal): Observable<Goal> {
     this.loadingSubject.next(true);
-    return from(this.getAuthHeaders()).pipe(switchMap(headers=>this.http
-      .post<Goal>(this.apiUrl, goal, { headers })
+    return this.http
+      .post<Goal>(this.apiUrl, goal)
       .pipe(
+        tap(() => this.goalsChangedSubject.next()),
         finalize(() => {
           this.loadingSubject.next(false);
         }),
-      )));
+      );
   }
   deleteGoal(goalId: any): Observable<any> {
     this.loadingSubject.next(true);
-    return from(this.getAuthHeaders()).pipe(switchMap(headers=>this.http
-      .delete<any>(`${this.apiUrl}/${goalId}`, { headers})
+    return this.http
+      .delete<any>(`${this.apiUrl}/${goalId}`)
       .pipe(
+        tap(() => this.goalsChangedSubject.next()),
         finalize(() => {
           this.loadingSubject.next(false);
         }),
-      )));
+      );
   }
 }

@@ -1,4 +1,5 @@
 <div class="flex flex-col self-stretch items-start">
+  @if(goals$ | async; as allGoals){
   <div
     class="flex item-start gap-6 self-stretch md:flex-wrap sm:flex-wrap lg:flex-nowrap xl:flex-nowrap lg:w-180 xl:w-7xl md:w-82.5 sm:w-82.5"
   >
@@ -12,7 +13,7 @@
         <app-button
           [icon]="faFilter"
           variant="secondary"
-          [disabled]="(goals$ | async)?.length === 0"
+          [disabled]="allGoals.length === 0"
           (onClick)="onOpenFilter()"
         >
           Filters</app-button
@@ -26,7 +27,7 @@
       </div>
       <div class="relative inline-block">
         <app-button variant="secondary" (onClick)="onOpenSortBy()"
-          [disabled]="(goals$ | async)?.length === 0"
+          [disabled]="allGoals.length === 0"
 
           >Sort by</app-button
         >
@@ -44,10 +45,8 @@
     id="goals"
     class="flex flex-wrap items-start gap-6 self-stretch md:w-[720px] sm:w-[311px] xs:w-[311px] xl:w-full"
   >
-  @if((goals$ | async) !== null){
-    @if(goals$ | async; as allGoals){
-      @if(allGoals.length > 0){
-        @for(goal of allGoals | goalFilter:activeFilterFn | filterSort: selectedSort:activeFilterFn; track goal.id){
+    @if(allGoals.length > 0){
+      @for(goal of allGoals | goalFilter:activeFilterFn | filterSort: selectedSort:activeFilterFn; track goal.id){
     <app-goal-card
       size="wide"
       [id]="goal.id"
@@ -58,9 +57,9 @@
       [currentAmount]="goal.current_amount"
       [state]="(goal.current_amount / goal.target_amount) * 100 === 100 ? 'complete':(goal.current_amount / goal.target_amount) * 100 !==0?'in-progress':'no-progress'"
     ></app-goal-card>
-        }
-      } @else{
-            <div
+      }
+    } @else{
+      <div
       class="flex xl:w-[1280px] py-[40px] gap-[32px] items-center flex-col rounded-[16px] border border-dashed border-neutral-600"
     >
       <div class="flex flex-col items-center gap-[20px]">
@@ -79,10 +78,9 @@
       <app-button [icon]="faPlus" (onClick)="onOpenCreateGoalModal()">Create your first goal</app-button>
       </div>
     </div>
-      }
-    }@else {<p class="text-orange-400 text-[16px] font-bold">Loading data...</p>}
-  }
+    }
   </div>
+  } @else {<p class="text-orange-400 text-[16px] font-bold">Loading data...</p>}
 </div>
 <ng-container *ngIf="openCreateGoal">
   <app-goal-modal

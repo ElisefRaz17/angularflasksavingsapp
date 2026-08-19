@@ -5,13 +5,12 @@ import {
 import { APP_INITIALIZER, Component, ChangeDetectionStrategy } from "@angular/core";
 import { Navbar } from "./app/navbar/navbar";
 import { NavigationEnd, provideRouter, Router, RouterLink, RouterOutlet } from "@angular/router";
-import { routeConfig } from "./app/routes";
-import { Register } from "./app/register/register";
-import { Login } from "./app/login/login";
 import { AppRoutingModule, routes } from "./app/app-routing.module";
 import { filter } from "rxjs/operators";
 import { CommonModule } from "@angular/common";
 import { ToastContainer } from "./app/toast-container/toast-container";
+import { provideHttpClient, withXhr, withInterceptors } from "@angular/common/http";
+import { authInterceptor } from "./app/interceptors/auth.interceptor";
 
 
 @Component({
@@ -45,5 +44,9 @@ export class App {
 }
 
 bootstrapApplication(App, {
-  providers: [provideProtractorTestingSupport(),provideRouter(routes)],
+  providers: [
+    provideProtractorTestingSupport(),
+    provideRouter(routes),
+    provideHttpClient(withXhr(), withInterceptors([authInterceptor])),
+  ],
 }).catch((err)=>console.error(err));

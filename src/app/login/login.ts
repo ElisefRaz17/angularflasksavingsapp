@@ -16,6 +16,7 @@ import {
   FormsModule,
   FormControl,
 } from "@angular/forms";
+import { ToastService } from "../services/toast";
 
 @Component({
   selector: "app-login",
@@ -27,6 +28,7 @@ import {
 })
 export class Login implements OnInit {
   loginForm!: FormGroup;
+  private toastService = inject(ToastService)
   private authService = inject(AuthService);
   private emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
   constructor(private router: Router) {}
@@ -52,6 +54,7 @@ export class Login implements OnInit {
       .signIn(this.loginForm.value.email, this.loginForm.value.password)
       .then((response: any) => {
         if (response.error) {
+          this.toastService.show("Incorrect Username or password. Please try again.","error")
           console.error("Authentication Error:", response.error.message);
         } else {
           this.router.navigate([""]);

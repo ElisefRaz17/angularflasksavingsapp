@@ -1,6 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Deposit } from '../services/deposit';
-import { finalize, map, Observable } from 'rxjs';
+import { finalize, map, Observable, shareReplay } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { GoalService } from '../services/goal.service';
 import { AuthService } from '../services/auth.service';
@@ -32,15 +32,15 @@ ngOnInit(): void {
     map(data=>data.reduce((acc,curr)=>acc + curr.amount,0)),
     finalize(()=>(this.isLoading= false))
   );
-  this.goalSum$=this.goalService.getGoals().pipe(
-    map(data=>data.reduce((acc,curr)=>acc + 1,0)),
-    finalize(()=>(this.isLoading= false))
-
+  const goals$ = this.goalService.getGoals().pipe(
+    finalize(()=>(this.isLoading= false)),
+    shareReplay(1)
+  );
+  this.goalSum$ = goals$.pipe(
+    map(data=>data.reduce((acc,curr)=>acc + 1,0))
   )
-  this.goalsCompleted$=this.goalService.getGoals().pipe(
-    map(data=>data.filter(item=>item.target_amount === item.current_amount).reduce((sum,cur)=>sum+1,0)),
-    finalize(()=>(this.isLoading= false))
-
+  this.goalsCompleted$ = goals$.pipe(
+    map(data=>data.filter(item=>item.target_amount === item.current_amount).reduce((sum,cur)=>sum+1,0))
   )
   
 }

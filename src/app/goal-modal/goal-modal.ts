@@ -1,18 +1,14 @@
 import { CommonModule } from "@angular/common";
 import {
   Component,
-  effect,
-  ElementRef,
   EventEmitter,
   inject,
   Input,
   OnInit,
   Output,
-  ViewChild,
 } from "@angular/core";
 import {
   ReactiveFormsModule,
-  FormBuilder,
   FormGroup,
   Validators,
   FormsModule,
@@ -24,7 +20,6 @@ import { Goal } from "../models/goal.model";
 import { CustomButton } from "../shared/button/button";
 import { AuthService } from "../services/auth.service";
 import { GoalService } from "../services/goal.service";
-import { HttpHeaders } from "@angular/common/http";
 import { finalize } from "rxjs";
 import { DataSharing } from "../data-sharing";
 import { ToastService } from "../services/toast";
@@ -96,6 +91,7 @@ export class GoalModal implements OnInit {
         .subscribe({
           next: (response) => {
             this.toastService.show("Goal Created Successfully","success")
+            this.save.emit(response);
             this.onClose();
           },
           error: (error) => {
@@ -111,7 +107,7 @@ export class GoalModal implements OnInit {
         .subscribe({
           next: (response) => {
             this.toastService.show("Goal Updated Successfully","success")
-
+            this.save.emit(response);
             this.onClose();
           },
           error: (error) => {

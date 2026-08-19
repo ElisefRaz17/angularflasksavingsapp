@@ -1,4 +1,5 @@
-import { Component, ElementRef, HostListener, inject, OnInit, signal } from "@angular/core";
+import { Component, DestroyRef, ElementRef, HostListener, inject, OnInit, signal } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { CustomButton } from "../shared/button/button";
 import { FontAwesomeModule } from "@fortawesome/angular-fontawesome";
 import { faFilter } from "@fortawesome/free-solid-svg-icons";
@@ -44,6 +45,7 @@ export class Goals implements OnInit {
   openSortMenu = signal(false);
   selectedSort:string = 'recently_added'
   private goalService = inject(GoalService);
+  private destroyRef = inject(DestroyRef);
   cardSizes = ["default", "wide", "tall"];
   cardState: any = "";
   filteredGoals: any[] = [];
@@ -107,6 +109,9 @@ export class Goals implements OnInit {
   onOpenCreateGoalModal(){
     this.openCreateGoal = true;
   }
+  onGoalSaved() {
+    this.goals$ = this.goalService.getGoals();
+  }
   onOpenSortBy() {
     this.openSortMenu.update((state) => !state);
   }
@@ -128,6 +133,9 @@ export class Goals implements OnInit {
       }
     });
     this.goals$ = this.goalService.getGoals();
+    this.goalService.goalsChanged$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => this.onGoalSaved());
     this.setRandomState();
   }
   setRandomState() {
