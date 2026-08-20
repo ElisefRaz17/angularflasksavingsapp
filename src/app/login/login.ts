@@ -28,6 +28,7 @@ import { ToastService } from "../services/toast";
 })
 export class Login implements OnInit {
   loginForm!: FormGroup;
+  isLoading = false;
   private toastService = inject(ToastService)
   private authService = inject(AuthService);
   private emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,6}$";
@@ -50,6 +51,7 @@ export class Login implements OnInit {
   }
 
   async onSubmit() {
+    this.isLoading = true;
     this.authService
       .signIn(this.loginForm.value.email, this.loginForm.value.password)
       .then((response: any) => {
@@ -61,6 +63,7 @@ export class Login implements OnInit {
           console.log("Login successful", response.data);
         }
       })
-      .catch((err: any) => console.error("Request failed:", err));
+      .catch((err: any) => console.error("Request failed:", err))
+      .finally(() => (this.isLoading = false));
   }
 }

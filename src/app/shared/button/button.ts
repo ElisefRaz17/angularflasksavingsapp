@@ -13,6 +13,7 @@ export type ButtonVariant = "primary" | "secondary" | "tertiary" | "danger";
 })
 export class CustomButton {
   @Input() disabled: boolean = false;
+  @Input() loading: boolean = false;
   @Input() icon?: IconDefinition;
   @Input() variant: ButtonVariant = "primary";
   @Input() btnClick = new EventEmitter<void>();
@@ -29,5 +30,8 @@ export class CustomButton {
       [`btn-${this.variant}`]: true,
       "btn-disabled": this.disabled,
     };
+  }
+  get isDisabled() {
+    return this.disabled || this.loading;
   }
 }

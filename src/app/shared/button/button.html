@@ -1,11 +1,18 @@
-<button 
+<button
 (click)="onClick.emit()"
   [type]="type"
-  [disabled]="disabled"
+  [disabled]="isDisabled"
   [ngClass]="buttonClasses"
   class="btn">
-  <span *ngIf="icon" class="icon">
-      <fa-icon [icon]="icon"></fa-icon>
+  <span *ngIf="loading"
+    class="inline-block h-5 w-5 animate-spin rounded-full border-2 border-solid border-current border-e-transparent"
+    role="status">
+    <span class="sr-only">Loading...</span>
   </span>
-  <ng-content></ng-content>
+  <ng-container *ngIf="!loading">
+    <span *ngIf="icon" class="icon">
+        <fa-icon [icon]="icon"></fa-icon>
+    </span>
+    <ng-content></ng-content>
+  </ng-container>
 </button>

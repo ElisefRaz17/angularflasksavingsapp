@@ -48,7 +48,7 @@
 
       <a routerLink="/reset-password" class="forgot-link">Forgot password?</a>
 
-      <app-button type="submit" form="loginForm" [disabled]="!loginForm.valid"
+      <app-button type="submit" form="loginForm" [disabled]="!loginForm.valid" [loading]="isLoading"
         >Sign in</app-button
       >
       <div class="sub-links-container">
