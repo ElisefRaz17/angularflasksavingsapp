@@ -1,21 +1,21 @@
-<nav class="flex w-full h-20 border-b border-neutral-800 justify-between items-center py-4 px-20 md:py-4 md:px-6 sm:px-4 sm:py-3 lg:w-190 xl:w-full">
+<nav class="flex w-full h-16 sm:h-20 border-b border-neutral-800 justify-between items-center px-4 py-3 sm:px-6 sm:py-4 lg:px-10 xl:px-20">
   <picture>
     <source media="(min-width: 1024px)" srcset="assets/logo-large.svg">
     <source media="(min-width: 768px)" srcset="assets/logo-small.svg">
     <img src="assets/logo-small.svg" alt="logo"/>
   </picture>
 
-  <div class="flex items-center gap-1">
+  <div class="flex items-center gap-1 sm:gap-2">
     <app-button
       [icon]="faPerson"
       variant="secondary"
       (onClick)="onOpenMenu()"
     ></app-button>
 
-    <app-button type="button" class="height:24px" (onClick)="openCreateGoal()">
+    <app-button type="button" (onClick)="openCreateGoal()">
       <img src="assets/icon-plus.svg" />
-      New Goal</app-button
-    >
+      <span class="hidden sm:inline">New Goal</span>
+    </app-button>
   </div>
 </nav>
 
@@ -28,9 +28,7 @@
   </app-goal-modal>
 </ng-container>
 <ng-container *ngIf="openMenu()">
-  <div class="menu-container">
-    <!-- <div  -->
+  <div class="menu-container absolute z-10 w-56 top-16 right-4 sm:w-70 sm:top-20 sm:right-6 lg:right-10 xl:right-20">
       <app-button class="menu-item" (onClick)="handleSignOut()">Sign Out</app-button>
-    <!-- </div> -->
   </div>
 </ng-container>
