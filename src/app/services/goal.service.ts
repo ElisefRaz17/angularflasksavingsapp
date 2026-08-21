@@ -16,6 +16,9 @@ export class GoalService {
   getGoals(){
     return this.http.get<any[]>(this.apiUrl);
   }
+  getGoal(goalId: any): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${goalId}`);
+  }
   updateGoal(goalId: any, goal: any): Observable<any> {
     this.loadingSubject.next(true);
     return this.http

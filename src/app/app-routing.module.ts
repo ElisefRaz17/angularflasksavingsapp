@@ -23,7 +23,7 @@ export const routes: Routes = [
     title: "Update Password",
   },
 
-  { path: "goal-details", component: EditDetails, title: "Edit Goal Details" , 
+  { path: "goal-details/:id", component: EditDetails, title: "Edit Goal Details" ,
 
     canActivate: [authGuard],
 

@@ -121,7 +121,7 @@ export class Goals implements OnInit {
   }
   onCardClick(goal: any) {
     this.dataService.getGoalDetails(goal);
-    this.router.navigate(["/goal-details"]);
+    this.router.navigate(["/goal-details", goal.id]);
   }
   calculatePercentage(current: number, target: number): number {
     return Math.round((current / target) * 100);
