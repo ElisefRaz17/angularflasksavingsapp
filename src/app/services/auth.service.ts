@@ -21,10 +21,11 @@ export class AuthService {
       environment.supabaseKey,
       {
         auth: {
-          storage: new InMemoryStorage(),
-          persistSession: false,
-          autoRefreshToken:false,
-          detectSessionInUrl:false
+          // storage: new InMemoryStorage(),
+          storage:window.sessionStorage,
+          persistSession: true,
+          autoRefreshToken:true,
+          detectSessionInUrl:true
         },
       },
     );
